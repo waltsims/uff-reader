@@ -1,5 +1,5 @@
 from dataclasses import dataclass 
-from position import Position
+from uff.position import Position
 
 
 @dataclass

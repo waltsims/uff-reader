@@ -1,7 +1,7 @@
 from dataclasses import dataclass 
-from aperture import Aperture
-from wave_origin import WaveOrigin
-from wave_type import WaveType
+from uff.aperture import Aperture
+from uff.wave_origin import WaveOrigin
+from uff.wave_type import WaveType
 
 
 @dataclass
@@ -18,5 +18,5 @@ class Wave:
     origin: WaveOrigin
     wave_type: WaveType
     aperture: Aperture
-    excitation: int
+    excitation: int=None
     

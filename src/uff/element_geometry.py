@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from perimeter import Perimeter
+from uff.perimeter import Perimeter
 
 
 @dataclass

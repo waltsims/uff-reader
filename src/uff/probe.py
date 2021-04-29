@@ -1,8 +1,8 @@
 from dataclasses import dataclass 
-from transform import Transform
-from element import Element
-from element_geometry import ElementGeometry
-from impulse_response import ImpulseResponse
+from uff.transform import Transform
+from uff.element import Element
+from uff.element_geometry import ElementGeometry
+from uff.impulse_response import ImpulseResponse
 
 
 @dataclass
@@ -26,6 +26,6 @@ class Probe:
     
     transform: Transform 
     element: Element
+    element_impulse_response: list[ImpulseResponse]
     focal_length: float = None
-    element_impulse_response: list[ImulseResponse]
 

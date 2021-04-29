@@ -1,7 +1,7 @@
 from dataclasses import dataclass 
-from transform import Transform
-from element_geometry import ElementGeometry
-from impulse_response import ImpulseResponse
+from uff.transform import Transform
+from uff.element_geometry import ElementGeometry
+from uff.impulse_response import ImpulseResponse
 
 
 @dataclass
