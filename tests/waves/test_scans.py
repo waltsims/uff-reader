@@ -1,3 +1,4 @@
+import uff
 from uff import *
 import numpy as np
 
@@ -34,6 +35,18 @@ def test_plane_wave_sequence():
 
 
 def test_sector_scan_diverging_beams():
+    n_waves = 5
+    azimuth = np.linspace(-np.pi / 6, np.pi / 6, n_waves)
+    virtual_source_distance = 20e-3
+
+    waves = []
+
+    for angle in azimuth:
+        w = Wave(origin=SphericalWaveOrigin(
+            position=Position(x=virtual_source_distance * np.sin(angle), z=-virtual_source_distance * np.cos(angle))),
+            wave_type=WaveType.DIVERGING, aperture=Aperture(window='rectwin', origin=Position(), fixed_size=[18e-3, 12e-3]))
+
+        waves.append(w)
     pass
 
 
@@ -59,13 +72,15 @@ def test_scan_mlt():
 
     events = []
     # Merge two beams into each event
-    for i in range(int(n_waves/n_mlt)):
+    for i in range(int(n_waves / n_mlt)):
         for wave_n in range(n_mlt):
             tw = TransmitWave(time_zero_reference_point=0, wave=waves[int(i + wave_n * n_waves / n_mlt)])
             # TODO: currently many Nones passed since all arguments are required. Fix by setting default parameters.
-            ts = TransmitSetup('transmit_waves', [tw], channel_mapping=None, sampled_delays=None, sampled_excitations=None, sampling_frequency=None, transmit_voltage=None )
+            ts = TransmitSetup('transmit_waves', [tw], channel_mapping=None, sampled_delays=None,
+                               sampled_excitations=None, sampling_frequency=None, transmit_voltage=None)
             # TODO: currently many Nones passed since all arguments are required. Fix by setting default parameters.
-            rs = ReceiveSetup(probe=None, time_offset=None, channel_mapping=None, sampling_frequency=None, tgc_profile=None, tgc_sampling_frequency=None, modulation_frequency=None)
+            rs = ReceiveSetup(probe=None, time_offset=None, channel_mapping=None, sampling_frequency=None,
+                              tgc_profile=None, tgc_sampling_frequency=None, modulation_frequency=None)
             events.append(Event(transmit_setup=ts, receive_setup=rs))
 
     pass
