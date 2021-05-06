@@ -51,6 +51,21 @@ def test_sector_scan_diverging_beams():
 
 
 def test_sector_scan_focus_beams():
+    n_waves = 16
+    azimuth = np.linspace(-np.pi / 6, np.pi / 6, n_waves)
+    focal_depth = 70e-3
+
+    waves = []
+
+    for angle in azimuth:
+        w = Wave(origin=SphericalWaveOrigin(
+            position=Position(x=focal_depth * np.sin(angle), z=focal_depth * np.cos(angle))),
+            wave_type=WaveType.CONVERGING, aperture=Aperture(window='rectwin', origin=Position(), fixed_size=[18e-3, 12e-3]))
+
+        waves.append(w)
+    pass
+
+
     pass
 
 
