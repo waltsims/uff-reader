@@ -1,8 +1,8 @@
-from dataclasses import dataclass 
+from dataclasses import dataclass
 
 
 @dataclass
-class RecieveSetup:
+class ReceiveSetup:
     """
     Describes the setup used to receive and sample data. If more than one probe is used in reception, this is a list of setups. 
 
@@ -19,10 +19,10 @@ class RecieveSetup:
     modulation_frequency 	(float): 	(Optional) Modulation frequency used in case of IQ-data [Hz]
 
     """
-    probe:int
-    time_offset:float
-    channel_mapping:list(list(int))
-    sampling_frequency:float
-    tgc_profile:list(float)
-    tgc_sampling_frequency:float
-    modulation_frequency:float
+    probe: int
+    time_offset: float
+    channel_mapping: list[list[int]]
+    sampling_frequency: float
+    tgc_profile: list[float]
+    tgc_sampling_frequency: float
+    modulation_frequency: float

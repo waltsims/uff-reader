@@ -13,4 +13,10 @@ from uff.wave import Wave
 from uff.wave_type import WaveType
 from uff.wave_origin import WaveOrigin
 from uff.plane_wave_origin import PlaneWaveOrigin
+from uff.spherical_wave_origin import SphericalWaveOrigin
+from uff.cylindrical_wave_origin import CylindricalWaveOrigin
+from uff.event import Event
+from uff.transmit_setup import TransmitSetup
+from uff.recieve_setup import ReceiveSetup
 from uff.probe import Probe
+from uff.transmit_wave import TransmitWave

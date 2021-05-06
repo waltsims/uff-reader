@@ -1,4 +1,5 @@
-from dataclasses import dataclass 
+from dataclasses import dataclass
+from uff.transmit_wave import TransmitWave
 
 
 @dataclass
@@ -16,10 +17,10 @@ class TransmitSetup:
         sampling_frequency 	(float): 	        (Optional) Sampling frequency of the excitation waveforms [Hz]
         transmit_voltage	(float): 	        (Optional) Peak amplitude of the pulse generator [V]
     """
-    probe:int
-    transmit_waves:list(TransmitWave)
-    channel_mapping:list(list(int))
-    sampled_delays:float
-    sampled_excitations:float
-    sampling_frequency:float
-    transmit_voltage:float
+    probe: int
+    transmit_waves: list[TransmitWave]
+    channel_mapping: list[list[int]]
+    sampled_delays: float
+    sampled_excitations: float
+    sampling_frequency: float
+    transmit_voltage: float
