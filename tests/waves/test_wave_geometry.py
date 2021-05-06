@@ -7,15 +7,15 @@ from uff.spherical_wave_origin import SphericalWaveOrigin
 from uff.plane_wave_origin import PlaneWaveOrigin
 
 
-#TODO: make test class here?
-#def test_wave_geometry();
+# TODO: make test class here?
+# def test_wave_geometry();
 def test_converging_wave():
     # Single convering wave
 
     # Geometric origin
     aperture = Aperture(window='hanning',
-                        origin = Position(),
-                        f_number = 2.1,
+                        origin=Position(),
+                        f_number=2.1,
                         fixed_size=[12e-3])
 
     wo = SphericalWaveOrigin()
@@ -23,13 +23,14 @@ def test_converging_wave():
     wt = WaveType.CONVERGING
     wave = Wave(aperture=aperture, origin=wo, wave_type=wt)
 
+
 def test_diverging_wave():
     # Single divergin wave
 
     # Geometric origin
     aperture = Aperture(window='hanning',
-                        origin = Position(),
-                        f_number = 2.1,
+                        origin=Position(),
+                        f_number=2.1,
                         fixed_size=12e-3)
 
     wo = SphericalWaveOrigin()
@@ -37,13 +38,14 @@ def test_diverging_wave():
     wt = WaveType.DIVERGING
     wave = Wave(aperture=aperture, origin=wo, wave_type=wt)
 
+
 def test_plane_wave():
     # Single divergin wave
 
     # Geometric origin
     aperture = Aperture(window='hanning',
-                        origin = Position(),
-                        f_number = 2.1,
+                        origin=Position(),
+                        f_number=2.1,
                         fixed_size=12e-3)
 
     wo = PlaneWaveOrigin()
