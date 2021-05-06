@@ -29,9 +29,9 @@ class Aperture:
                                 dynamic aperture in m [Az, El]
     """
     origin: Position
-    f_number: float
     # TODO: what should fixed size type be? list? float? how do you reproduce the same functionality
-    fixed_size: float 
+    fixed_size: float
+    f_number: float = None
     window: str = 'rectwin'
     minimum_size: float = 0
     maximum_size: float = 0

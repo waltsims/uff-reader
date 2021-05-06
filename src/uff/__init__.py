@@ -11,4 +11,6 @@ from uff.position import Position
 from uff.aperture import Aperture
 from uff.wave import Wave
 from uff.wave_type import WaveType
+from uff.wave_origin import WaveOrigin
+from uff.plane_wave_origin import PlaneWaveOrigin
 from uff.probe import Probe
