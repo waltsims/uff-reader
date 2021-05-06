@@ -28,6 +28,6 @@ def test_plane_wave_sequence():
     waves = []
 
     for wave_idx in range(N_waves):
-        a = Aperture(fixed_size=[40e-3, 12e-3], origin=Position(), window='hamming')
+        a: Aperture = Aperture(fixed_size=[40e-3, 12e-3], origin=Position(), window='hamming')
         origin = PlaneWaveOrigin(rotation=Rotation(y=angles[wave_idx]))
         waves.append(Wave(origin=origin, aperture=a, wave_type=WaveType.PLANE))

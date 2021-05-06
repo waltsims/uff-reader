@@ -3,6 +3,6 @@ from uff.wave_origin import WaveOrigin
 from uff.position import Position
 
 @dataclass
-class SphericalWaveOrigin(WaveOrigin):
+class CylindricalWaveOrigin(WaveOrigin):
     position: Position = Position()
 
