@@ -16,7 +16,7 @@ def test_converging_wave():
     aperture = Aperture(window='hanning',
                         origin = Position(),
                         f_number = 2.1,
-                        fixed_size=12e-3)
+                        fixed_size=[12e-3])
 
     wo = SphericalWaveOrigin()
     p = Position(x=20e-3, y=0, z=50e-3)

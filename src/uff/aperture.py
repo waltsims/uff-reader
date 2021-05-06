@@ -20,8 +20,8 @@ class Aperture:
         window (str): 	        String defining the apodization window type and 
                                 parameter (e.g., 'Hamming', 'Gauss(8)', 'Tukey(0.5)')
                             
-        f_number (float):	    Desired F-number of the aperture [Az, El]
-        fixed_size (float):     If non-zero, this overwrites the size of the aperture 
+        f_number list[float]:	Desired F-number of the aperture [Az, El]
+        fixed_size list[float]: If non-zero, this overwrites the size of the aperture 
                                 in [m] [Az, El]
         minimun_size (float):   (Optional) If non-zero, this sets a limit for the minimum 
                                 dynamic aperture in m [Az, El]
@@ -29,9 +29,10 @@ class Aperture:
                                 dynamic aperture in m [Az, El]
     """
     origin: Position
-    window: str
     f_number: float
-    fixed_size: float
+    # TODO: what should fixed size type be? list? float? how do you reproduce the same functionality
+    fixed_size: float 
+    window: str = 'rectwin'
     minimum_size: float = 0
     maximum_size: float = 0
         
