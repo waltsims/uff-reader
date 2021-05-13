@@ -1,15 +1,14 @@
 #!/usr/bin/env python
 
 from distutils.core import setup
+from uff._version import __version__
 
 setup(name='UFF.py',
-      version='0.1',
+      version=__version__,
       description='Python interface for the Ultrasound File Format (UFF)',
       author='Walter Simson',
       author_email='walter.simson@tum.de',
-      #url='',
+      # url='',
       packages=['uff'],
-      package_dir = {'':'src'}
-     )
-
-
+      package_dir={'': 'src'}
+      )
