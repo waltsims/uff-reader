@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 from uff.rotation import Rotation
-from uff.wave_origin import WaveOrigin
+from uff.origin import Origin
 
 
 @dataclass
-class PlaneWaveOrigin(WaveOrigin):
+class PlaneWaveOrigin(Origin):
     rotation: Rotation = Rotation()

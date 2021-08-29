@@ -17,6 +17,6 @@ class Element:
         will have size 1) and unique impulse response.
     """
     transform: Transform
-    element_geometery: ElementGeometry
+    element_geometry: ElementGeometry
     impulse_response: ImpulseResponse
     

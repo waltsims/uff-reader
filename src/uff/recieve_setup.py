@@ -23,6 +23,6 @@ class ReceiveSetup:
     time_offset: float
     channel_mapping: list[list[int]]
     sampling_frequency: float
-    tgc_profile: list[float]
-    tgc_sampling_frequency: float
-    modulation_frequency: float
+    tgc_profile: list[float] = list[0.0]
+    tgc_sampling_frequency: float = 0
+    modulation_frequency: float = 0

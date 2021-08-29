@@ -1,8 +1,9 @@
 from dataclasses import dataclass
-from uff.wave_origin import WaveOrigin
+from uff.origin import Origin
 from uff.position import Position
 
+
 @dataclass
-class CylindricalWaveOrigin(WaveOrigin):
+class CylindricalWaveOrigin(Origin):
     position: Position = Position()
 

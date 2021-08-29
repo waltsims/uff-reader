@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from uff.position import Position
+from uff.time_zero_reference_point import TimeZeroReferencePoint
 from uff.wave import Wave
 
 
@@ -21,6 +22,7 @@ class TransmitWave:
                                                 pulse inversion sequences. [Default = 1]
     """
     wave: Wave
-    time_zero_reference_point: Position
+    # TODO: should be of type position but current dynamic instantiation does not allow for that.
+    time_zero_reference_point: TimeZeroReferencePoint #Position
     time_offset: float = 0
     weight: float = 1

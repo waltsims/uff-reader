@@ -16,7 +16,7 @@ class WaveType(Enum):
     DIVERGING = 1
     PLANE = 2
     CYLINDRICAL = 3
-    PHOTOACOUSTic = 4
+    PHOTOACOUSTIC = 4
     DEFAULT = 0
     
 

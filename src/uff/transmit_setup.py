@@ -20,7 +20,7 @@ class TransmitSetup:
     probe: int
     transmit_waves: list[TransmitWave]
     channel_mapping: list[list[int]]
-    sampled_delays: float
-    sampled_excitations: float
-    sampling_frequency: float
-    transmit_voltage: float
+    sampled_delays: float = 0.0
+    sampled_excitations: float = 0.0
+    sampling_frequency: float = 0.0
+    transmit_voltage: float = 0.0

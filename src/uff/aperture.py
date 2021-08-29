@@ -1,5 +1,6 @@
 from dataclasses import dataclass 
 from uff.position import Position
+from uff.origin import Origin
 
 
 @dataclass
@@ -28,10 +29,11 @@ class Aperture:
         maximum_size (float): 	(Optional) If non-zero, this sets a limit for the maximum 
                                 dynamic aperture in m [Az, El]
     """
-    origin: Position
+    # TODO: standard has this named aperture but defined as position
+    position: Position
     # TODO: what should fixed size type be? list? float? how do you reproduce the same functionality
     fixed_size: float
-    f_number: float = None
+    f_number: float = 1.0
     window: str = 'rectwin'
     minimum_size: float = 0
     maximum_size: float = 0

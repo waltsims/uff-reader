@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from uff.translation import Translation
 from uff.rotation import Rotation
 
+
 @dataclass
 class Transform:
     """Specifies a 3D affine transformation of rotation plus translation,

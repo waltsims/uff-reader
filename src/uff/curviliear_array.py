@@ -1,4 +1,4 @@
-from dataclasses import dataclass 
+from dataclasses import dataclass
 from probe import Probe
 
 
@@ -15,9 +15,8 @@ class CurvilinearArray(Probe):
         element_height (float):	(Optional) Element size in the y-axis [m]
     """
 
-    number_elements:int
-    pitch:float
+    number_elements: int
+    pitch: float
     radius: float
-    element_width:float = None
-    element_height:float = None
-    
+    element_width: float = None
+    element_height: float = None

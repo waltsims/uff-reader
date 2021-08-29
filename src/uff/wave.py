@@ -1,6 +1,6 @@
-from dataclasses import dataclass 
+from dataclasses import dataclass
 from uff.aperture import Aperture
-from uff.wave_origin import WaveOrigin
+from uff.origin import Origin
 from uff.wave_type import WaveType
 
 
@@ -15,8 +15,7 @@ class Wave:
         aperture (Aperture):     	Description of the aperture used to produce the wave
         excitation 	(int): 	        (Optional) index to the unique excitation in the parent group
     """
-    origin: WaveOrigin
+    origin: Origin
     wave_type: WaveType
     aperture: Aperture
-    excitation: int=None
-    
+    excitation: int = None

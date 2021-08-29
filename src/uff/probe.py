@@ -23,9 +23,18 @@ class Probe:
         uff.probe.curvilinear_array, and
         uff.probe.matrix_array.
     """
-    
-    transform: Transform 
-    element: Element
+
+    # >> TODO: These parameters are not defined in the standard
+    number_elements: int
+    pitch: float
+    element_height: float
+    element_width: float
+    element_geometry: list[ElementGeometry]
+    ##  <<
+    transform: Transform
+    element: list[Element]
     element_impulse_response: list[ImpulseResponse]
     focal_length: float = None
+
+
 
