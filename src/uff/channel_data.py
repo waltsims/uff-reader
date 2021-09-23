@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import List
 
 from uff import Probe, Wave, Event, TimedEvent
 from uff.excitation import Excitation
@@ -51,9 +52,9 @@ class ChannelData:
     """
 
     probes: Probe
-    unique_waves: Wave
-    unique_events: Event
-    unique_excitations: Excitation
+    unique_waves: List[Wave]
+    unique_events: List[Event]
+    unique_excitations: List[Excitation]
     sequence: TimedEvent
     sound_speed: float
     authors: str = ""

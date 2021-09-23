@@ -35,8 +35,8 @@ class Aperture:
     fixed_size: float
     f_number: float = 1.0
     window: str = 'rectwin'
-    minimum_size: float = 0
-    maximum_size: float = 0
+    minimum_size: float = None
+    maximum_size: float = None
         
 
     

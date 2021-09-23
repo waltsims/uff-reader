@@ -1,4 +1,5 @@
-from dataclasses import dataclass 
+from dataclasses import dataclass
+from typing import List
 
 
 @dataclass
@@ -13,6 +14,6 @@ class Excitation:
         sampling_frequency (float): 	Scalar conatining the sampling frequency of the excitation waveform [Hz]
     """
     pulse_shape:str
-    waveform:float
+    waveform:List[float]
     sampling_frequency:float
     

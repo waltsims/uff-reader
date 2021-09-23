@@ -1,4 +1,6 @@
-from dataclasses import dataclass 
+from dataclasses import dataclass
+from typing import List
+
 from uff.transform import Transform
 from uff.element import Element
 from uff.element_geometry import ElementGeometry
@@ -29,12 +31,11 @@ class Probe:
     pitch: float
     element_height: float
     element_width: float
-    element_geometry: list[ElementGeometry]
     ##  <<
     transform: Transform
-    element: list[Element]
-    element_impulse_response: list[ImpulseResponse]
+    element: List[Element]
+    element_impulse_response: List[ImpulseResponse] = None
     focal_length: float = None
-
-
-
+    # >> TODO: These parameters are not defined in the standard
+    element_geometry: List[ElementGeometry] = None
+    ##  <<

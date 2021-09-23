@@ -1,4 +1,6 @@
 from dataclasses import dataclass
+from typing import List
+
 from uff.transmit_wave import TransmitWave
 
 
@@ -18,9 +20,9 @@ class TransmitSetup:
         transmit_voltage	(float): 	        (Optional) Peak amplitude of the pulse generator [V]
     """
     probe: int
-    transmit_waves: list[TransmitWave]
-    channel_mapping: list[list[int]]
-    sampled_delays: float = 0.0
-    sampled_excitations: float = 0.0
-    sampling_frequency: float = 0.0
-    transmit_voltage: float = 0.0
+    transmit_waves: List[TransmitWave]
+    channel_mapping: List[List[int]]
+    sampled_delays: float = None
+    sampled_excitations: float = None
+    sampling_frequency: float = None
+    transmit_voltage: float = None

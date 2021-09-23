@@ -18,5 +18,5 @@ class Element:
     """
     transform: Transform
     element_geometry: ElementGeometry
-    impulse_response: ImpulseResponse
+    impulse_response: ImpulseResponse = None  #farid
     

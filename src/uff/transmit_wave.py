@@ -21,7 +21,7 @@ class TransmitWave:
                                                 [unitless between -1 and +1]. This may be used to describe 
                                                 pulse inversion sequences. [Default = 1]
     """
-    wave: Wave
+    wave: int
     # TODO: should be of type position but current dynamic instantiation does not allow for that.
     time_zero_reference_point: TimeZeroReferencePoint #Position
     time_offset: float = 0
