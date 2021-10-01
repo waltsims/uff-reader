@@ -13,3 +13,6 @@ class Rotation(Serializable):
     @staticmethod
     def str_name():
         return 'rotation'
+
+    def __eq__(self, other):
+        return super().__eq__(other)

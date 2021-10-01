@@ -1,4 +1,4 @@
-from dataclasses import dataclass 
+from dataclasses import dataclass
 from uff.position import Position
 from uff.origin import Origin
 from uff.uff_io import Serializable
@@ -48,6 +48,17 @@ class Aperture(Serializable):
     window: str = 'rectwin'
     minimum_size: float = None
     maximum_size: float = None
-        
 
-    
+    def __eq__(self, other):
+        return super().__eq__(other)
+
+    # def __eq__(self, other):
+    #     if not isinstance(other, Aperture):
+    #         return False
+    #
+    #     return self.position == other.position and \
+    #            self.fixed_size == other.f_number and \
+    #            self.f_number == other.f_number and \
+    #            self.window == other.window and \
+    #            self.minimum_size == other.minimum_size and \
+    #            self.maximum_size == other.maximum_size

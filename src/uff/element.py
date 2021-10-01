@@ -25,4 +25,6 @@ class Element(Serializable):
     transform: Transform
     element_geometry: ElementGeometry
     impulse_response: ImpulseResponse = None  #farid
-    
+
+    def __eq__(self, other):
+        return super().__eq__(other)

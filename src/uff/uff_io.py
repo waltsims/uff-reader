@@ -33,7 +33,6 @@ class Serializable(metaclass=abc.ABCMeta):
             property_cls = fields[k]
             if isinstance(property_cls, typing._GenericAlias):
                 property_cls = property_cls.__args__[0]
-            print(property_cls)  # property_cls.__origin__ is list§
             assert property_cls is not None, f'Class {k} is not Serializable!'
 
             if not is_keys_str_decimals(v):
@@ -100,3 +99,39 @@ class Serializable(metaclass=abc.ABCMeta):
 
         remaining_list = list(set(obj_attrs) - set(set_list))
         return set_list, remaining_list
+
+    def __eq__(self, other):
+        if not isinstance(other, self.__class__):
+            return False
+
+        equal = True
+        last_attr = None
+
+        for k in self.__annotations__.keys():
+            if not equal:
+                break
+            last_attr = k
+
+            my_attr = getattr(self, k)
+            other_attr = getattr(other, k)
+            if isinstance(my_attr, np.ndarray):
+                if not isinstance(other_attr, np.ndarray):
+                    equal = False
+                elif not np.allclose(my_attr, other_attr):
+                    equal = False
+            else:
+                try:
+                    if getattr(self, k) != getattr(other, k):
+                        equal = False
+                except ValueError as err:
+                    print('Ooops! Something went wrong! Probably unsupported comparision. '
+                          'Try to override the __eq__ method & handle custom data structures properly. '
+                          'Error message is given below:')
+                    raise err
+
+        if not equal:
+            print('Non-matching attributes detected!')
+            print(f'Class name: {self.__class__}')
+            print(f'Attrb name: {last_attr}')
+
+        return equal

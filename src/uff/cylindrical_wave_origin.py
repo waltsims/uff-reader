@@ -11,3 +11,5 @@ class CylindricalWaveOrigin(Origin):
     def str_name():
         return 'cylindrical_wave_origin'
 
+    def __eq__(self, other):
+        return super().__eq__(other)

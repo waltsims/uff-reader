@@ -6,6 +6,7 @@ from uff.utils import *
 from src.uff import *
 import inspect
 from uff.uff_io import Serializable
+from debug_h5_dict import traverse
 
 
 def init_obj_from_param_list(class_name: str, params: dict):
@@ -93,40 +94,24 @@ def instantiate_args(object_parameters: list, args_dict: dict) -> dict:
 
     return args_dict
 
+if __name__ == '__main__':
+    test_dict = load_dict_from_hdf5('/Users/faridyagubbayli/Work/fieldII_converging_wave_mlt_sector.uff')
+    uff = traverse(test_dict)
 
-# TODO traverse to bottom until value is not dict
-def traverse(uff_dict: dict):
-    uff_parameters = vars(UFF()).keys()
-    # strip off uff prefix
-    uff_dict = strip_prefix_from_keys(old_dict=uff_dict, prefix="uff.")
-    args = instantiate_args(uff_parameters, uff_dict)
-    uff = UFF()
-    uff.__dict__ = args
+    test_dict = load_dict_from_hdf5('/Users/faridyagubbayli/Work/fieldII_converging_wave_mlt_sector.uff')
+    uff_dict = strip_prefix_from_keys(old_dict=test_dict, prefix="uff.")
 
-    # If val not dict
-    # If key correct ObjectType ==> instatiate object
-    # Elif check if string is index
-    # cast str to int
-    # add to dict of objects key int position and  value object
-    # Else raise Error
-    # return object
-    # Else recursive call of dict
-    # traverse dict
-    pass
+    for k, v in uff_dict.items():
+        if k == 'version':
+            assert is_version_compatible(v, (0, 3, 0))
+            print("good version")
+            continue
+        cls = Serializable.get_subcls_with_name(k)
+        out = cls.deserialize(v)
+        print('Does outputs match:', out == uff.channel_data)
 
+    # print(out)
 
-test_dict = load_dict_from_hdf5('/Users/faridyagubbayli/Work/fieldII_converging_wave_mlt_sector.uff')
-uff_dict = strip_prefix_from_keys(old_dict=test_dict, prefix="uff.")
-
-for k, v in uff_dict.items():
-    if k == 'version':
-        assert is_version_compatible(v, (0, 3, 0))
-        print("good version")
-        continue
-    cls = Serializable.get_subcls_with_name(k)
-    out = cls.deserialize(v)
-
-    print(cls)
 # print(uff_dict)
 # filepath = '/private/var/folders/wd/pzn3h1fn37s6gbt12tyj50gw0000gn/T/example_output.h5'
 # uff_h5 = h5py.File(filepath)

@@ -7,3 +7,5 @@ from uff.position import Position
 class SphericalWaveOrigin(Origin):
     position: Position = Position()
 
+    def __eq__(self, other):
+        return super().__eq__(other)

@@ -80,3 +80,6 @@ class ChannelData(Serializable):
     system: str = ""
     repetition_rate: float = None
     data: complex = 0
+
+    def __eq__(self, other):
+        return super().__eq__(other)

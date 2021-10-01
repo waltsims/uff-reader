@@ -14,3 +14,6 @@ class Origin(Serializable):
 
     rotation: Rotation = Rotation()
     position: Position = Position()
+
+    def __eq__(self, other):
+        return super().__eq__(other)

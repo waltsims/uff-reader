@@ -23,4 +23,6 @@ class Excitation(Serializable):
     pulse_shape:str
     waveform:List[float]
     sampling_frequency:float
-    
+
+    def __eq__(self, other):
+        return super().__eq__(other)

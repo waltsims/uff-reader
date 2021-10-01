@@ -18,3 +18,6 @@ class Position(Serializable):
     @staticmethod
     def str_name():
         return 'position'
+
+    def __eq__(self, other):
+        return super().__eq__(other)

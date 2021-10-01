@@ -18,4 +18,6 @@ class LinearArray(Probe):
     pitch:float
     element_width:float
     element_height:float
-    
+
+    def __eq__(self, other):
+        return super().__eq__(other)

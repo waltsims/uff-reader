@@ -34,3 +34,6 @@ class ReceiveSetup(Serializable):
     tgc_profile: List[float] = None
     tgc_sampling_frequency: float = None
     modulation_frequency: float = None
+
+    def __eq__(self, other):
+        return super().__eq__(other)

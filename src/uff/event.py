@@ -20,3 +20,6 @@ class Event(Serializable):
     @staticmethod
     def str_name():
         return 'unique_events'
+
+    def __eq__(self, other):
+        return super().__eq__(other)

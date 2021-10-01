@@ -48,3 +48,6 @@ class Probe(Serializable):
     # >> TODO: These parameters are not defined in the standard
     element_geometry: List[ElementGeometry] = None
     ##  <<
+
+    def __eq__(self, other):
+        return super().__eq__(other)

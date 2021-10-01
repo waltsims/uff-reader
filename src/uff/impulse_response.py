@@ -14,3 +14,6 @@ class ImpulseResponse(Serializable):
     @staticmethod
     def str_name():
         return 'element_impulse_response'
+
+    def __eq__(self, other):
+        return super().__eq__(other)

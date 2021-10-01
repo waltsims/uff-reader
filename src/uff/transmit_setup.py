@@ -32,3 +32,6 @@ class TransmitSetup(Serializable):
     sampled_excitations: float = None
     sampling_frequency: float = None
     transmit_voltage: float = None
+
+    def __eq__(self, other):
+        return super().__eq__(other)

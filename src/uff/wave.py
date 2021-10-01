@@ -30,3 +30,6 @@ class Wave(Serializable):
     wave_type: WaveType
     aperture: Aperture
     excitation: int = None
+
+    def __eq__(self, other):
+        return super().__eq__(other)

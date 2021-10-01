@@ -31,3 +31,6 @@ class TransmitWave(Serializable):
     @staticmethod
     def str_name():
         return 'transmit_waves'
+
+    def __eq__(self, other):
+        return super().__eq__(other)
