@@ -1,11 +1,12 @@
 from dataclasses import dataclass
 from uff.position import Position
 from uff.time_zero_reference_point import TimeZeroReferencePoint
+from uff.uff_io import Serializable
 from uff.wave import Wave
 
 
 @dataclass
-class TransmitWave:
+class TransmitWave(Serializable):
     """
     UFF class to describe a transmitted wave as used in an event. 
 
@@ -26,3 +27,7 @@ class TransmitWave:
     time_zero_reference_point: TimeZeroReferencePoint #Position
     time_offset: float = 0
     weight: float = 1
+
+    @staticmethod
+    def str_name():
+        return 'transmit_waves'

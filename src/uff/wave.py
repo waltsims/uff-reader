@@ -1,11 +1,12 @@
 from dataclasses import dataclass
 from uff.aperture import Aperture
 from uff.origin import Origin
+from uff.uff_io import Serializable
 from uff.wave_type import WaveType
 
 
 @dataclass
-class Wave:
+class Wave(Serializable):
     """
     UFF class to describe the geometry of a transmitted wave or beam.
 
@@ -15,6 +16,16 @@ class Wave:
         aperture (Aperture):     	Description of the aperture used to produce the wave
         excitation 	(int): 	        (Optional) index to the unique excitation in the parent group
     """
+
+    @staticmethod
+    def str_name():
+        return 'unique_waves'
+
+    @classmethod
+    def deserialize(cls: object, data: dict):
+        data['wave_type'] = data.pop('type')
+        return super().deserialize(data)
+
     origin: Origin
     wave_type: WaveType
     aperture: Aperture

@@ -5,10 +5,11 @@ from uff.transform import Transform
 from uff.element import Element
 from uff.element_geometry import ElementGeometry
 from uff.impulse_response import ImpulseResponse
+from uff.uff_io import Serializable
 
 
 @dataclass
-class Probe:
+class Probe(Serializable):
     """
     Describes an generic ultrsound probe formed by a collection of elements.
 
@@ -25,6 +26,14 @@ class Probe:
         uff.probe.curvilinear_array, and
         uff.probe.matrix_array.
     """
+
+    @staticmethod
+    def str_name():
+        return 'probes'
+
+    # @classmethod
+    # def deserialize(cls, data: dict):
+    #     pass
 
     # >> TODO: These parameters are not defined in the standard
     number_elements: int

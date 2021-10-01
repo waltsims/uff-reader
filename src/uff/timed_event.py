@@ -1,9 +1,10 @@
 from dataclasses import dataclass
 from uff.event import Event
+from uff.uff_io import Serializable
 
 
 @dataclass
-class TimedEvent:
+class TimedEvent(Serializable):
     """
     UFF class to describe a TR/RX event transmitted at a given moment in time.
 
@@ -14,3 +15,7 @@ class TimedEvent:
     """
     event: Event
     time_offset: float
+
+    @staticmethod
+    def str_name():
+        return 'sequence'

@@ -1,10 +1,11 @@
 from dataclasses import dataclass 
 from uff.position import Position
 from uff.origin import Origin
+from uff.uff_io import Serializable
 
 
 @dataclass
-class Aperture:
+class Aperture(Serializable):
     """
     UFF class to define analytically the aperture use in an ultrasound wave.
 
@@ -29,6 +30,16 @@ class Aperture:
         maximum_size (float): 	(Optional) If non-zero, this sets a limit for the maximum 
                                 dynamic aperture in m [Az, El]
     """
+
+    @staticmethod
+    def str_name():
+        return 'aperture'
+
+    @classmethod
+    def deserialize(cls: object, data: dict):
+        data['position'] = data.pop('origin')
+        return super().deserialize(data)
+
     # TODO: standard has this named aperture but defined as position
     position: Position
     # TODO: what should fixed size type be? list? float? how do you reproduce the same functionality

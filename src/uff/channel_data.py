@@ -3,10 +3,11 @@ from typing import List
 
 from uff import Probe, Wave, Event, TimedEvent
 from uff.excitation import Excitation
+from uff.uff_io import Serializable
 
 
 @dataclass
-class ChannelData:
+class ChannelData(Serializable):
     """
     UFF class that contains all the information needed to store and later process channel data.
 
@@ -50,6 +51,20 @@ class ChannelData:
     sequence (TimedEvent): 	            List of the times_events that describe the sequence
     sound_speed	(float): 	            Reference sound speed for Tx and Rx events [m/s]
     """
+
+    @staticmethod
+    def str_name():
+        return 'channel_data'
+
+    def serialize(self):
+        pass
+
+    # @staticmethod
+    # def deserialize(data: dict):
+    #     set_attrs, remaining_attrs = self.assign_primitives(data)
+    #     print(set_attrs)
+    #     print('=' * 20)
+    #     print(remaining_attrs)
 
     probes: Probe
     unique_waves: List[Wave]
