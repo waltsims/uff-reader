@@ -1,17 +1,20 @@
+import abc
 import copy
 import inspect
 
 import h5py
 # from src.uff import *
+from uff import ChannelData
+from uff.uff_io import Serializable
 from uff.utils import *
 
 
 # TODO: best to instatiate with dictionary, since h5py also creates dictionary of data from h5 file...
-class UFF:
+class UFF(Serializable):
 
     # TODO: @classmethod for from file construction
     def __init__(self):
-        self.channel_data = None
+        self.channel_data:ChannelData = None
         self.event = None
         self.timed_event = None
         self.transmit_setup = None
@@ -37,6 +40,33 @@ class UFF:
 
     def __deepcopy__(self, memodict={}):
         pass
+
+    @staticmethod
+    def str_name():
+        return "UFF"
+
+    @classmethod
+    def deserialize(cls: object, data: dict):
+        obj = UFF()
+        primitives = (np.ndarray, np.int64, np.float64, str, bytes, int, float)
+
+        for k, v in data.items():
+            if isinstance(v, primitives):
+                setattr(obj, k, v)
+                continue
+            assert isinstance(v, dict), f'{type(v)} did not pass type-assertion'
+
+            property_cls = Serializable.get_subcls_with_name(k)
+
+            if not is_keys_str_decimals(v):
+                setattr(obj, k, property_cls.deserialize(v))
+            else:
+                # TODO: assert keys are correct => ascending order starting from 000001
+                list_of_objs = list(v.values())
+                list_of_objs = [property_cls.deserialize(item) for item in list_of_objs]
+                setattr(obj, k, list_of_objs)
+
+        return obj
 
     @staticmethod
     def check_version(uff_h5):
