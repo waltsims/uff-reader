@@ -56,9 +56,6 @@ class ChannelData(Serializable):
     def str_name():
         return 'channel_data'
 
-    def serialize(self):
-        pass
-
     # @staticmethod
     # def deserialize(data: dict):
     #     set_attrs, remaining_attrs = self.assign_primitives(data)

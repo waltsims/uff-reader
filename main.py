@@ -17,3 +17,6 @@ if __name__ == '__main__':
         cls = Serializable.get_subcls_with_name(k)
         out = cls.deserialize(v)
         print('Does outputs match:', out == uff.channel_data)
+
+        serialized = out.serialize()
+        print(serialized)

@@ -14,9 +14,26 @@ class Serializable(metaclass=abc.ABCMeta):
     def str_name():
         return
 
-    # @abc.abstractmethod
     def serialize(self):
-        return
+        primitives = (np.ndarray, np.int64, np.float64, str, bytes, int, float)
+        serialized = {}
+
+        for k, value in vars(self).items():
+            if value is None:
+                continue
+
+            if isinstance(value, primitives):
+                serialized[k] = value
+                continue
+            elif isinstance(value, list):
+                keys = [f'{i:06d}' for i in range(len(value))]
+                values = [val.serialize() for val in value]
+                serialized[k] = dict(zip(keys, values))
+            elif isinstance(value, Serializable): #cls in Serializable.__subclasses__():
+                serialized[k] = value.serialize()
+            else:
+                raise TypeError(f'Unknown type [{type(value)}] for serialization!')
+        return serialized
 
     @classmethod
     def deserialize(cls: object, data: dict):
