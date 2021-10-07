@@ -4,3 +4,4 @@ __pycache__
 MANIFEST
 .idea
 *.h5
+*.uff

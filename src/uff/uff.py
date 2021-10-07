@@ -189,6 +189,15 @@ class UFF(Serializable):
 
     pass
 
+    def save(self, output_uff_path:str, version=None):
+        if not output_uff_path.endswith('.uff'):
+            output_uff_path += '.uff'
+
+        serialized = self.serialize()
+        if version is not None:
+            serialized['version'] = version
+        serialized['uff.channel_data'] = serialized.pop('channel_data')
+        save_dict_to_hdf5(serialized, output_uff_path)
 
 def save(self, data_path, root_name):
     # Saves UFF object to disk

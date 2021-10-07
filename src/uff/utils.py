@@ -41,7 +41,7 @@ def _recursively_save_dict_contents_to_group(h5file, path, dic):
     """
     ....
     """
-    BASIC_DATATYPES = (np.ndarray, np.int64, np.float64, str, bytes)
+    BASIC_DATATYPES = (np.ndarray, np.int64, np.float64, str, bytes, int, float)
 
     for key, item in dic.items():
         if isinstance(item, BASIC_DATATYPES):
