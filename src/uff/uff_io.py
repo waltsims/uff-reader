@@ -78,32 +78,6 @@ class Serializable(metaclass=abc.ABCMeta):
 
         return cls(**data)
 
-    # @classmethod
-    # def deserialize(cls, data: dict):
-    #     primitives = (np.ndarray, np.int64, np.float64, str, bytes, int, float)
-    #
-    #     if cls.__name__ == 'TransmitSetup':
-    #         print('aaa')
-    #
-    #     for k, v in data.items():
-    #         if isinstance(v, primitives):
-    #             continue
-    #         assert isinstance(v, dict), f'{type(v)} did not pass type-assertion'
-    #
-    #         property_cls = Serializable.get_subcls_with_name(k)
-    #         print(property_cls)
-    #         assert property_cls is not None, f'Class {k} is not Serializable!'
-    #
-    #         if not is_keys_str_decimals(v):
-    #             data[k] = property_cls.deserialize(v)
-    #         else:
-    #             # TODO: assert keys are correct => ascending order starting from 000001
-    #             list_of_objs = list(v.values())
-    #             list_of_objs = [property_cls.deserialize(item) for item in list_of_objs]
-    #             data[k] = list_of_objs
-    #
-    #     return cls(**data)
-
     @staticmethod
     def all_subclasses(cls=None) -> List[Type[Serializable]]:
         if cls is None:
