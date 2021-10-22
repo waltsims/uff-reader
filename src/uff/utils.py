@@ -39,6 +39,7 @@ def save_dict_to_hdf5(dic, filename):
 
 def _recursively_save_dict_contents_to_group(h5file, path, dic):
     """
+        argument => Tuple(data: dict, attrs: dict)
     ....
     """
     BASIC_DATATYPES = (np.ndarray, np.int64, np.float64, str, bytes, int, float)
@@ -48,6 +49,10 @@ def _recursively_save_dict_contents_to_group(h5file, path, dic):
             h5file[path + key] = item
         elif isinstance(item, dict):
             _recursively_save_dict_contents_to_group(h5file, path + key + '/', item)
+            if is_keys_str_decimals(item):
+                h5file[path + key].attrs['array_size'] = len(item.keys())
+            if path + key == '/uff.channel_data/probes/00000001':
+                h5file[path + key].attrs['probe_type'] = 'uff.probe.linear_array'
         else:
             raise ValueError(f'Cannot save {type(item)} type')
 

@@ -26,6 +26,11 @@ class Wave(Serializable):
         data['wave_type'] = data.pop('type')
         return super().deserialize(data)
 
+    def serialize(self):
+        data = super().serialize()
+        data['type'] = data.pop('wave_type')
+        return data
+
     origin: Origin
     wave_type: WaveType
     aperture: Aperture

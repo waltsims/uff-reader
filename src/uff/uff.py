@@ -163,6 +163,7 @@ class UFF(Serializable):
         return args_dict
 
     def load(self, data_path):
+        # TODO load should be here!
         # get uff version number
         uff_dict = load_dict_from_hdf5(data_path)
         # self.check_version(uff_dict)

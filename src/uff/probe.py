@@ -42,6 +42,7 @@ class Probe(Serializable):
     element_width: float
     ##  <<
     transform: Transform
+    # TODO for conformity call `elements`
     element: List[Element]
     element_impulse_response: List[ImpulseResponse] = None
     focal_length: float = None

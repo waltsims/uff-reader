@@ -17,6 +17,7 @@ class Serializable(metaclass=abc.ABCMeta):
     def serialize(self):
         primitives = (np.ndarray, np.int64, np.float64, str, bytes, int, float)
         serialized = {}
+        from uff import WaveType
 
         for k, value in vars(self).items():
             if value is None:
@@ -26,11 +27,26 @@ class Serializable(metaclass=abc.ABCMeta):
                 serialized[k] = value
                 continue
             elif isinstance(value, list):
-                keys = [f'{i:06d}' for i in range(len(value))]
-                values = [val.serialize() for val in value]
+                keys = [f'{i:08d}' for i in range(1, len(value) + 1)]
+                values = []
+                for val in value:
+                    if isinstance(val, primitives):
+                        values.append(val)
+                    elif isinstance(val, Serializable):
+                        values.append(val.serialize())
+                    elif isinstance(val, list):
+                        keys2 = [f'{i:08d}' for i in range(1, len(val) + 1)]
+                        vals2 = [v for v in val]
+                        values.append(dict(zip(keys2, vals2)))
+                    else:
+                        raise NotImplementedError
+
+                # values = [val.serialize() if not isinstance(value, primitives) else val for val in value]  # TODO clean it up
                 serialized[k] = dict(zip(keys, values))
             elif isinstance(value, Serializable): #cls in Serializable.__subclasses__():
                 serialized[k] = value.serialize()
+            elif isinstance(value, WaveType):
+                serialized[k] = value.value
             else:
                 raise TypeError(f'Unknown type [{type(value)}] for serialization!')
         return serialized
@@ -48,7 +64,7 @@ class Serializable(metaclass=abc.ABCMeta):
 
             # property_cls = Serializable.get_subcls_with_name(k)
             property_cls = fields[k]
-            if isinstance(property_cls, typing._GenericAlias):
+            if isinstance(property_cls, typing._GenericAlias):  # TODO explain this
                 property_cls = property_cls.__args__[0]
             assert property_cls is not None, f'Class {k} is not Serializable!'
 

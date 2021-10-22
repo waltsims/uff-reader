@@ -35,13 +35,13 @@ class Aperture(Serializable):
     def str_name():
         return 'aperture'
 
-    @classmethod
-    def deserialize(cls: object, data: dict):
-        data['position'] = data.pop('origin')
-        return super().deserialize(data)
+    # @classmethod
+    # def deserialize(cls: object, data: dict):
+    #     data['position'] = data.pop('origin')
+    #     return super().deserialize(data)
 
     # TODO: standard has this named aperture but defined as position
-    position: Position
+    origin: Position
     # TODO: what should fixed size type be? list? float? how do you reproduce the same functionality
     fixed_size: float
     f_number: float = 1.0

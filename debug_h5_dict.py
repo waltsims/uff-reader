@@ -204,8 +204,8 @@ def instantiate_args(object_parameters: list, args_dict: dict) -> dict:
 
                 else:
                     # TODO: fix the naming/ definition of aperture. Either position or origin
-                    if parameter == "aperture":
-                        arg['position'] = arg.pop('origin')
+                    # if parameter == "aperture":
+                    #     arg['position'] = arg.pop('origin')
 
                     obj_params = [*inspect.signature(globals()[object_name]).parameters]
                     args_dict[parameter] = globals()[object_name](**instantiate_args(obj_params, arg))
