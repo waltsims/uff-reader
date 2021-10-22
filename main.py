@@ -15,7 +15,7 @@ def load_with_previous_code(path):
 
 
 def load_uff_dict(path):
-    test_dict = load_dict_from_hdf5('/Users/faridyagubbayli/Work/uff_references/fieldII_converging_wave_mlt_sector.uff')
+    test_dict = load_dict_from_hdf5(path)
     uff_dict = strip_prefix_from_keys(old_dict=test_dict, prefix="uff.")
     return uff_dict
 
@@ -55,24 +55,20 @@ def verify_correctness(output_path, ref_path):
         print(set(ref_attrs) - set(out_attrs))
         raise AssertionError
 
-    # with h5py.File(output_path, 'r') as out_file:
-    #     with h5py.File(ref_path, 'r') as ref_file:
-    #
-    #         for ds_path in out_datasets:
-    #             print(ds_path)
-    #
-    #             ref_ds = np.array(ref_file[ds_path])
-    #             out_ds = np.array(out_file[ds_path])
-    #
-    #             if ref_ds.dtype != '|S1':
-    #                 assert np.allclose(out_ds, ref_ds)
-    #
-    # print('aaa')
+    print('Passed structure correctness checks!')
 
 
 if __name__ == '__main__':
     ref_uff_path = '/Users/faridyagubbayli/Work/uff_references/fieldII_converging_wave_mlt_sector.uff'
-    # ref_uff_path = '/Users/faridyagubbayli/Work/uff_references/example_probe_curvilinear.uff'
+
+    # fieldII_converging_wave_mlt_sector.uff        =>      OK
+    # fieldII_converging_wave_grid.uff              =>      OK
+    # fieldII_diverging_wave_grid.uff               =>      OK
+    # fieldII_plane_wave_grid.uff                   =>      OK
+    # fieldII_single_element_transmit_grid.uff      =>      OK
+    # spherical_probe.uff                           =>      BLIND LOAD
+    # example_probe_curvilinear.uff                 =>      BLIND LOAD
+    # example_probe_matrix.uff                      =>      BLIND LOAD
 
     uff_dict = load_uff_dict(ref_uff_path)
 
@@ -86,4 +82,3 @@ if __name__ == '__main__':
     uff_new.save(uff_new_save_path, version)
 
     verify_correctness(uff_new_save_path, ref_uff_path)
-

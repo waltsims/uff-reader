@@ -15,6 +15,9 @@ class CurvilinearArray(Probe):
         element_height (float):	(Optional) Element size in the y-axis [m]
     """
 
+    def str_name(self):
+        return 'probe.curvilinear_array'
+
     number_elements: int
     pitch: float
     radius: float

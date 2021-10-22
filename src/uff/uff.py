@@ -1,6 +1,7 @@
 import abc
 import copy
 import inspect
+import warnings
 
 import h5py
 # from src.uff import *
@@ -56,7 +57,13 @@ class UFF(Serializable):
                 continue
             assert isinstance(v, dict), f'{type(v)} did not pass type-assertion'
 
-            property_cls = Serializable.get_subcls_with_name(k)
+            if k != 'channel_data':
+                warnings.warn(f'\nWarning: The UFF standard specifies how objects of class uff.channel_data are written.\n'
+                              f'Although other properties can be saved to the file, they are very likely cannot be read back.\n'
+                              f'In order to avoid unnecessary crashes, property `uff.{k}` will not be deserialized.')
+                continue
+            else:
+                property_cls = ChannelData
 
             if not is_keys_str_decimals(v):
                 setattr(obj, k, property_cls.deserialize(v))
@@ -197,7 +204,8 @@ class UFF(Serializable):
         serialized = self.serialize()
         if version is not None:
             serialized['version'] = version
-        serialized['uff.channel_data'] = serialized.pop('channel_data')
+        if 'channel_data' in serialized:
+            serialized['uff.channel_data'] = serialized.pop('channel_data')
         save_dict_to_hdf5(serialized, output_uff_path)
 
 def save(self, data_path, root_name):
