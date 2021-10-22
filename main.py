@@ -1,10 +1,5 @@
 import os
-
-import numpy as np
-
 from debug_h5_dict import traverse
-from h5_diff import H5Summary
-from uff.uff_io import Serializable
 from uff.utils import *
 from uff.uff import UFF
 
