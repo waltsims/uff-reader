@@ -3,6 +3,7 @@ import os
 import numpy as np
 
 from debug_h5_dict import traverse
+from h5_diff import H5Summary
 from uff.uff_io import Serializable
 from uff.utils import *
 from uff.uff import UFF
@@ -37,6 +38,7 @@ def load_h5dump(filepath):
 
 
 def verify_correctness(output_path, ref_path):
+    print('Correcness check will start now ...')
     out_groups, out_datasets, out_attrs = load_h5dump(output_path)
     ref_groups, ref_datasets, ref_attrs = load_h5dump(ref_path)
 
@@ -56,6 +58,21 @@ def verify_correctness(output_path, ref_path):
         raise AssertionError
 
     print('Passed structure correctness checks!')
+
+    with h5py.File(output_path, 'r') as out_h5:
+        with h5py.File(ref_path, 'r') as ref_h5:
+
+            for ds in ref_datasets:
+                out_val = out_h5[ds][()]
+                ref_val = ref_h5[ds][()]
+                if isinstance(out_val, np.ndarray) and isinstance(ref_val, np.ndarray):
+                    if out_val.dtype == '|S1' and ref_val.dtype == '|S1':
+                        assert np.all(out_val == ref_val), f'Dataset [{ds}] does not match!'
+                    else:
+                        assert np.allclose(out_val, ref_val), f'Dataset [{ds}] does not match!'
+                else:
+                    assert out_val == ref_val, f'Dataset [{ds}] does not match!'
+    print('Passed value-wise correctness checks!')
 
 
 if __name__ == '__main__':

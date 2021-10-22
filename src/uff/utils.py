@@ -42,10 +42,14 @@ def _recursively_save_dict_contents_to_group(h5file, path, dic):
         argument => Tuple(data: dict, attrs: dict)
     ....
     """
-    BASIC_DATATYPES = (np.ndarray, np.int64, np.float64, str, bytes, int, float)
+    BASIC_DATATYPES = (np.ndarray, np.int64, np.float64, bytes, int, float)
 
     for key, item in dic.items():
-        if isinstance(item, BASIC_DATATYPES):
+        if isinstance(item, str):
+            # Strings will be stored as list of lists where each element is a byte character
+            h5file[path + key] = [[c.encode()] for c in list(item)]
+        elif isinstance(item, BASIC_DATATYPES):
+            # Primitive types stored directly
             h5file[path + key] = item
         elif isinstance(item, dict):
             _recursively_save_dict_contents_to_group(h5file, path + key + '/', item)
