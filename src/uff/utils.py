@@ -49,7 +49,8 @@ def _recursively_save_dict_contents_to_group(h5file, path, dic):
     for key, item in dic.items():
         if isinstance(item, str):
             # Strings will be stored as list of lists where each element is a byte character
-            h5file[path + key] = [[c.encode()] for c in list(item)]
+            # TODO: This should save as a string, but the comparison files have lists of chars from matlab.
+            h5file.create_dataset(path + key, data=[list(c) for c in item], dtype='|S1')
         elif isinstance(item, BASIC_DATATYPES):
             # Primitive types stored directly
             h5file[path + key] = item

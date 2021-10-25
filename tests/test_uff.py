@@ -3,7 +3,7 @@ from uff.uff import UFF
 
 
 def test_uff_save_load():
-    ref_folder = 'tests/data'
+    ref_folder = './data'
     ref_files = [
         'fieldII_converging_wave_mlt_sector.uff',
         'fieldII_converging_wave_grid.uff',
