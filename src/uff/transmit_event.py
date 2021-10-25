@@ -12,3 +12,6 @@ class TransmitEvent:
     """
     event:int
     time_offset:float
+
+    def __eq__(self, other):
+        return super().__eq__(other)

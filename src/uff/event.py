@@ -1,10 +1,11 @@
 from dataclasses import dataclass
 from uff.transmit_setup import TransmitSetup
 from uff.recieve_setup import ReceiveSetup
+from uff.uff_io import Serializable
 
 
 @dataclass
-class Event:
+class Event(Serializable):
     """
     UFF class to describe an unique ultrasound event, composed by a single transmit and receive setup
 
@@ -15,3 +16,10 @@ class Event:
     """
     transmit_setup: TransmitSetup
     receive_setup: ReceiveSetup
+
+    @staticmethod
+    def str_name():
+        return 'unique_events'
+
+    def __eq__(self, other):
+        return super().__eq__(other)

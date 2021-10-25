@@ -1,8 +1,11 @@
 from dataclasses import dataclass
+from typing import List
+
+from uff.uff_io import Serializable
 
 
 @dataclass
-class ReceiveSetup:
+class ReceiveSetup(Serializable):
     """
     Describes the setup used to receive and sample data. If more than one probe is used in reception, this is a list of setups. 
 
@@ -19,10 +22,18 @@ class ReceiveSetup:
     modulation_frequency 	(float): 	(Optional) Modulation frequency used in case of IQ-data [Hz]
 
     """
+
+    @staticmethod
+    def str_name():
+        return 'receive_setup'
+
     probe: int
     time_offset: float
-    channel_mapping: list[list[int]]
+    channel_mapping: List[List[int]]
     sampling_frequency: float
-    tgc_profile: list[float] = list[0.0]
-    tgc_sampling_frequency: float = 0
-    modulation_frequency: float = 0
+    tgc_profile: List[float] = None
+    tgc_sampling_frequency: float = None
+    modulation_frequency: float = None
+
+    def __eq__(self, other):
+        return super().__eq__(other)

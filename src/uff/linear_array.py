@@ -14,8 +14,13 @@ class LinearArray(Probe):
         element_height (float):	(Optional) Element size in the y-axis [m]
     """
 
+    def str_name(self):
+        return 'probe.linear_array'
+
     number_elements:int
     pitch:float
     element_width:float
     element_height:float
-    
+
+    def __eq__(self, other):
+        return super().__eq__(other)

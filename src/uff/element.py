@@ -1,11 +1,12 @@
-from dataclasses import dataclass 
+from dataclasses import dataclass
 from uff.transform import Transform
 from uff.element_geometry import ElementGeometry
 from uff.impulse_response import ImpulseResponse
+from uff.uff_io import Serializable
 
 
 @dataclass
-class Element:
+class Element(Serializable):
     """UFF class to define an ultrasonic element
 
     Notes:
@@ -16,7 +17,14 @@ class Element:
         have unique geometry (i.e. in a linear array element_geometry 
         will have size 1) and unique impulse response.
     """
+
+    @staticmethod
+    def str_name():
+        return 'element'
+
     transform: Transform
     element_geometry: ElementGeometry
-    impulse_response: ImpulseResponse
-    
+    impulse_response: ImpulseResponse = None  #farid
+
+    def __eq__(self, other):
+        return super().__eq__(other)

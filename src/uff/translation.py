@@ -1,10 +1,19 @@
 from dataclasses import dataclass
+from uff.uff_io import Serializable
 
 
 @dataclass
-class Translation:
+class Translation(Serializable):
     """Define a translation operation in a 3D Cartesian system"""
     x: float
     y: float
     z: float
+
+    @staticmethod
+    def str_name():
+        return 'translation'
+
+    def __eq__(self, other):
+        return super().__eq__(other)
+
 

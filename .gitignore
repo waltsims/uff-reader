@@ -3,3 +3,5 @@ __pycache__
 .tox
 MANIFEST
 .idea
+*.h5
+*.uff

@@ -7,3 +7,9 @@ from uff.position import Position
 class CylindricalWaveOrigin(Origin):
     position: Position = Position()
 
+    @staticmethod
+    def str_name():
+        return 'cylindrical_wave_origin'
+
+    def __eq__(self, other):
+        return super().__eq__(other)

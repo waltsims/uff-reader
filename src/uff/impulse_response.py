@@ -1,11 +1,19 @@
-from dataclasses import dataclass 
+from dataclasses import dataclass
+from typing import List
+from uff.uff_io import Serializable
 
 
 @dataclass
-class ImpulseResponse:
+class ImpulseResponse(Serializable):
     """Specifies a temporal impulse response"""
     initial_time: float
     sampling_frequency: int
-    data: list[float]
+    data: List[float]
     units: str
-    
+
+    @staticmethod
+    def str_name():
+        return 'element_impulse_response'
+
+    def __eq__(self, other):
+        return super().__eq__(other)

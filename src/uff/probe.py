@@ -1,12 +1,15 @@
-from dataclasses import dataclass 
+from dataclasses import dataclass
+from typing import List
+
 from uff.transform import Transform
 from uff.element import Element
 from uff.element_geometry import ElementGeometry
 from uff.impulse_response import ImpulseResponse
+from uff.uff_io import Serializable
 
 
 @dataclass
-class Probe:
+class Probe(Serializable):
     """
     Describes an generic ultrsound probe formed by a collection of elements.
 
@@ -24,17 +27,28 @@ class Probe:
         uff.probe.matrix_array.
     """
 
+    @staticmethod
+    def str_name():
+        return 'probes'
+
+    # @classmethod
+    # def deserialize(cls, data: dict):
+    #     pass
+
     # >> TODO: These parameters are not defined in the standard
     number_elements: int
     pitch: float
     element_height: float
     element_width: float
-    element_geometry: list[ElementGeometry]
     ##  <<
     transform: Transform
-    element: list[Element]
-    element_impulse_response: list[ImpulseResponse]
+    # TODO for conformity call `elements`
+    element: List[Element]
+    element_impulse_response: List[ImpulseResponse] = None
     focal_length: float = None
+    # >> TODO: These parameters are not defined in the standard
+    element_geometry: List[ElementGeometry] = None
+    ##  <<
 
-
-
+    def __eq__(self, other):
+        return super().__eq__(other)

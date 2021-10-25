@@ -25,4 +25,4 @@ from uff.time_zero_reference_point import TimeZeroReferencePoint
 from uff.channel_data import ChannelData
 from uff.transmit_wave import TransmitWave
 from uff.uff import UFF
-# from uff.version import __version__, __version_info__
+from uff.version import __version__, __version_info__
