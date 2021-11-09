@@ -67,6 +67,18 @@ class ChannelData(Serializable):
 
         return serialized
 
+    @classmethod
+    def deserialize(cls: object, data: dict):
+        if 'data_imag' in data:
+            assert 'data_real' in data
+
+        if 'data_real' in data:
+            data['data'] = data.pop('data_real')
+
+        if 'data_imag' in data:
+            data['data'] += 1j * data.pop('data_imag')
+        return super().deserialize(data)
+
     # @staticmethod
     # def deserialize(data: dict):
     #     set_attrs, remaining_attrs = self.assign_primitives(data)
