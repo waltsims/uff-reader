@@ -3,6 +3,9 @@ import os
 import numpy as np
 import h5py
 
+PRIMITIVE_INTS = (int, np.int32, np.int64)
+PRIMITIVE_FLOATS = (float, np.float32, np.float64)
+PRIMITIVES = (np.ndarray, bytes, str) + PRIMITIVE_INTS + PRIMITIVE_FLOATS
 
 def strip_prefix_from_keys(old_dict: dict, prefix: str):
     new_dict = {}
@@ -44,13 +47,12 @@ def _recursively_save_dict_contents_to_group(h5file, path, dic):
         argument => Tuple(data: dict, attrs: dict)
     ....
     """
-    BASIC_DATATYPES = (np.ndarray, np.int64, np.int32, np.float64, bytes, int, float)
 
     for key, item in dic.items():
         if isinstance(item, str):
             # Strings will be stored as list of lists where each element is a byte character
             h5file[path + key] = item.encode()  #[[c.encode()] for c in list(item)]
-        elif isinstance(item, BASIC_DATATYPES):
+        elif isinstance(item, PRIMITIVES):
             # Primitive types stored directly
             h5file[path + key] = item
         elif isinstance(item, dict):
