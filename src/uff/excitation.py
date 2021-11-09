@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 from typing import List
 
+import numpy as np
+
 from uff.uff_io import Serializable
 
 
@@ -20,8 +22,12 @@ class Excitation(Serializable):
     def str_name():
         return 'unique_excitations'
 
+    def serialize(self):
+        assert isinstance(self.waveform, np.ndarray), 'Excitation.waveform should be an np.ndarray'
+        return super().serialize()
+
     pulse_shape:str
-    waveform:List[float]
+    waveform: np.ndarray
     sampling_frequency:float
 
     def __eq__(self, other):

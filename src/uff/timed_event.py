@@ -13,8 +13,12 @@ class TimedEvent(Serializable):
     time_offset (float):    Time offset relative to start of the sequence repetition (frame) [s]
 
     """
-    event: Event
+    event: int
     time_offset: float
+
+    def serialize(self):
+        assert isinstance(self.event, int), 'TimedEvent.event should be index of the uff.event.'
+        return super().serialize()
 
     @staticmethod
     def str_name():

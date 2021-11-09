@@ -15,7 +15,7 @@ class Serializable(metaclass=abc.ABCMeta):
         return
 
     def serialize(self):
-        primitives = (np.ndarray, np.int64, np.float64, str, bytes, int, float)
+        primitives = (np.ndarray, np.int64, np.int32, np.float64, str, bytes, int, float)
         serialized = {}
         from uff import WaveType
 

@@ -5,9 +5,9 @@ from uff.uff_io import Serializable
 @dataclass
 class Position(Serializable):
     """Contains a location in space in Cartesian coordinates and SI units."""
-    x: float = 0
-    y: float = 0
-    z: float = 0
+    x: float = 0.0
+    y: float = 0.0
+    z: float = 0.0
 
     def __add__(self, p2):
         self.x += p2.x

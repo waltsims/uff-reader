@@ -1,3 +1,4 @@
+import numpy as np
 from dataclasses import dataclass
 from typing import List
 
@@ -56,6 +57,16 @@ class ChannelData(Serializable):
     def str_name():
         return 'channel_data'
 
+    def serialize(self):
+        serialized = super(ChannelData, self).serialize()
+
+        data = serialized.pop('data')
+        if data.dtype == np.complex:
+            serialized['data_imag'] = data.imag
+        serialized['data_real'] = data.real
+
+        return serialized
+
     # @staticmethod
     # def deserialize(data: dict):
     #     set_attrs, remaining_attrs = self.assign_primitives(data)
@@ -73,10 +84,9 @@ class ChannelData(Serializable):
     description: str = ""
     local_time: str = ""
     country_code: str = ""
-    data_real: bool = 0
     system: str = ""
     repetition_rate: float = None
-    data: complex = 0
+    data: np.ndarray = 0.0  # could be complex or real
 
     def __eq__(self, other):
         return super().__eq__(other)
