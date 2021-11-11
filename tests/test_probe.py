@@ -16,4 +16,10 @@ def test_instantiation():
     eg = ElementGeometry(Perimeter([Position(1, 1, 1)]))
     ir = ImpulseResponse(0, 10, [1, 1, 1], '[m]')
     e = Element(tt, eg, ir)
-    p = Probe(transform=tt, element=e, element_impulse_response=[ir])
+    p = Probe(transform=tt,
+              element=e,
+              element_impulse_response=[ir],
+              number_elements=128,
+              pitch=0,
+              element_height=0.15,
+              element_width=0.3)
