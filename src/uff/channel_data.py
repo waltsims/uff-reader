@@ -72,11 +72,13 @@ class ChannelData(Serializable):
         if 'data_imag' in data:
             assert 'data_real' in data
 
-        if 'data_real' in data:
+        if 'data_imag' in data and 'data_real' in data:
+            data['data'] = data.pop('data_real') + 1j * data.pop('data_imag')
+        elif 'data_real' in data:
             data['data'] = data.pop('data_real')
+        else:
+            raise KeyError(f'Channel data not found in {object}')
 
-        if 'data_imag' in data:
-            data['data'] += 1j * data.pop('data_imag')
         return super().deserialize(data)
 
     # @staticmethod

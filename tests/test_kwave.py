@@ -1,12 +1,12 @@
-from src.uff import *
+from uff import *
 from datetime import datetime
 from uff.utils import *
 
 
-def load_kwave_output(filepath):
+def create_uff(data_type='real'):
     n_elem = 32
     Nx, Ny, Nz = 128, 128, 16
-    elem_width = 1
+    elem_width = 4
     elem_spacing = 0
     elem_length = 12
     elem_pitch = elem_width + elem_spacing
@@ -105,14 +105,18 @@ def load_kwave_output(filepath):
         sampling_frequency=1/dt
     )]
 
-    test_dict = load_dict_from_hdf5(filepath)
-
-    data = test_dict['p']
-    data_new = np.empty((data.shape[:2]) + (n_elem, ))
+    if data_type is 'complex':
+        data = np.random.random((Nx, Ny, Nz)) + np.random.random((Nx, Ny, Nz)) * 1j
+        data_new = np.empty((data.shape[:1]) + (n_elem, ), dtype=complex)
+    elif data_type is 'real':
+        data = np.random.random((Nx, Ny, Nz))
+        data_new = np.empty((data.shape[:1]) + (n_elem, ))
+    else:
+        raise ValueError(f'Invalid argument {data_type} passed')
 
     for elem in range(n_elem):
-        s_index, e_index = elem * n_elem, (elem + 1) * n_elem
-        data_new[:, :, elem] = data[:, :, s_index:e_index].sum()
+        s_index, e_index = elem * elem_width, (elem + 1) * elem_width
+        data_new[:, elem] = data[s_index:e_index, :, :].sum(axis=(0,2))
 
     assert data_new.shape[-1] == n_elem
 
@@ -139,11 +143,9 @@ def load_kwave_output(filepath):
     }
     return uff, version
 
-def test_kwave_io():
-    # Load kWave output
-    data_folder = 'data'
-    kwave_output_path = 'kwave_output.h5'
-    kwave_uff, version = load_kwave_output(os.path.join(data_folder, kwave_output_path))
+def test_kwave_complex_io():
+    # Create kWave output
+    kwave_uff, version = create_uff('complex')
 
     # Save kWave output in .uff format
     kwave_uff.save('kwave_out.uff', version)
@@ -157,6 +159,29 @@ def test_kwave_io():
 
     # Save back loaded .uff file
     uff_loaded = UFF.deserialize(uff_dict)
+
+    uff_loaded.save('kwave_out_duplicate.uff', version)
+
+    # Check equality of both files
+    verify_correctness('kwave_out.uff', 'kwave_out_duplicate.uff')
+
+def test_kwave_real_io():
+    # Create kWave output
+    kwave_uff, version = create_uff('real')
+
+    # Save kWave output in .uff format
+    kwave_uff.save('kwave_out.uff', version)
+
+    # Load save .uff file
+    uff_dict = load_uff_dict('kwave_out.uff')
+
+    # Check version correctness
+    version = uff_dict['version']
+    assert is_version_compatible(version, (0, 3, 0))
+
+    # Save back loaded .uff file
+    uff_loaded = UFF.deserialize(uff_dict)
+
     uff_loaded.save('kwave_out_duplicate.uff', version)
 
     # Check equality of both files
