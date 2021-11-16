@@ -11,5 +11,4 @@ setup(name='UFF.py',
       author_email='walter.simson@tum.de',
       # url='',
       packages=['uff'],
-      package_dir={'': 'src'}),
-)
+      package_dir={'': 'src'})
