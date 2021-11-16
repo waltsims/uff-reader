@@ -1,14 +1,9 @@
-from uff.position import Position
-from uff.wave_type import WaveType
-from uff.aperture import Aperture
-from uff.position import Position
-from uff.wave import Wave
-from uff.spherical_wave_origin import SphericalWaveOrigin
+from uff import Aperture, Position, WaveType
 from uff.plane_wave_origin import PlaneWaveOrigin
+from uff.spherical_wave_origin import SphericalWaveOrigin
+from uff.wave import Wave
 
 
-# TODO: make test class here?
-# def test_wave_geometry();
 def test_converging_wave():
     # Single convering wave
 
@@ -34,7 +29,7 @@ def test_diverging_wave():
                         fixed_size=12e-3)
 
     wo = SphericalWaveOrigin()
-    p = Position(x=20e-3, y=0, z=50e-3)
+    pos = Position(x=20e-3, y=0, z=50e-3)
     wt = WaveType.DIVERGING
     wave = Wave(aperture=aperture, origin=wo, wave_type=wt)
 

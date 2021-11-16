@@ -1,5 +1,7 @@
-from uff.utils import *
+import os
+
 from uff.uff import UFF
+from uff.utils import verify_correctness, is_version_compatible, load_uff_dict
 
 
 def test_uff_save_load():

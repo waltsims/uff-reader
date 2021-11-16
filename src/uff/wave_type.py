@@ -3,7 +3,7 @@ from enum import Enum
 
 class WaveType(Enum):
     """
-    enumerated type (int) 
+    enumerated type (int)
         converging = 0
         diverging = 1
         plane = 2
@@ -18,5 +18,3 @@ class WaveType(Enum):
     CYLINDRICAL = 3
     PHOTOACOUSTIC = 4
     DEFAULT = 0
-    
-

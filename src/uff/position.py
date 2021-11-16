@@ -1,4 +1,5 @@
-from dataclasses import  dataclass
+from dataclasses import dataclass
+
 from uff.uff_io import Serializable
 
 
@@ -18,6 +19,3 @@ class Position(Serializable):
     @staticmethod
     def str_name():
         return 'position'
-
-    def __eq__(self, other):
-        return super().__eq__(other)

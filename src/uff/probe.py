@@ -1,10 +1,10 @@
 from dataclasses import dataclass
 from typing import List
 
-from uff.transform import Transform
 from uff.element import Element
 from uff.element_geometry import ElementGeometry
 from uff.impulse_response import ImpulseResponse
+from uff.transform import Transform
 from uff.uff_io import Serializable
 
 
@@ -15,9 +15,9 @@ class Probe(Serializable):
 
     Note:
 
-    Where focal_length specifies the lens focusing distance. Note that the 
-    elements in element_geometry and impulse_response are referred by the 
-    fields inside each member in element, avoiding unnecessary replication 
+    Where focal_length specifies the lens focusing distance. Note that the
+    elements in element_geometry and impulse_response are referred by the
+    fields inside each member in element, avoiding unnecessary replication
     of information.
 
     More compact, although less general, descriptions are available for:
@@ -32,7 +32,8 @@ class Probe(Serializable):
         return 'probes'
 
     def serialize(self):
-        assert isinstance(self.element_geometry, list), 'Probe.element_geometry should be a list of element geometries!'
+        assert isinstance(self.element_geometry, list), \
+            'Probe.element_geometry should be a list of element geometries!'
         return super().serialize()
 
     # @classmethod
@@ -53,6 +54,3 @@ class Probe(Serializable):
     # >> TODO: These parameters are not defined in the standard
     element_geometry: List[ElementGeometry] = None
     ##  <<
-
-    def __eq__(self, other):
-        return super().__eq__(other)
