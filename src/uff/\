@@ -1,8 +1,0 @@
-from uff.aperture import Aperture
-from uff.position import Positon
-
-
-def test_instatiation():
-    P
-    Aperture(window='Hamming', f_number=1, fixed_size=1)
-
