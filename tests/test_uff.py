@@ -21,7 +21,7 @@ def test_uff_save_load():
         # if they do not download them with utils.
         base_url = 'http://ustb.no/datasets/uff/'
         urls = [base_url + file for file in ref_files]
-        download_test_data(ref_dir, urls)
+        download_test_data(rel_path=ref_dir, file_urls=urls)
 
     for ref_file in ref_files:
         ref_uff_path = os.path.join(ref_dir, ref_file)

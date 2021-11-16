@@ -1,4 +1,5 @@
 import os
+import multiprocessing as mp
 
 import h5py
 import numpy as np
@@ -10,6 +11,20 @@ PRIMITIVE_FLOATS = (float, np.float32, np.float64)
 PRIMITIVES = (np.ndarray, bytes, str) + PRIMITIVE_INTS + PRIMITIVE_FLOATS
 
 
+def download_file(rel_path, url):
+    """
+
+    Args:
+        rel_path (str): download path
+        url (str): file_url
+
+    """
+
+    r = requests.get(url)
+    with open(Path(rel_path) / url.split('/')[-1], 'wb') as file:
+        file.write(r.content)
+
+
 def download_test_data(rel_path, file_urls):
     """
 
@@ -19,10 +34,8 @@ def download_test_data(rel_path, file_urls):
 
     """
 
-    for url in file_urls:
-        r = requests.get(url)
-        with open(Path(rel_path) / url.split('/')[-1], 'wb') as file:
-            file.write(r.content)
+    with mp.Pool(mp.cpu_count()) as pool:
+        pool.starmap(download_file, [(rel_path, url) for url in file_urls])
 
 
 def strip_prefix_from_keys(old_dict: dict, prefix: str):
