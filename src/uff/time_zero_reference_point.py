@@ -7,6 +7,3 @@ class TimeZeroReferencePoint(Position):
     @staticmethod
     def str_name():
         return 'time_zero_reference_point'
-
-    def __eq__(self, other):
-        return super().__eq__(other)

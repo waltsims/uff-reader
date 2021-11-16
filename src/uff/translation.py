@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+
 from uff.uff_io import Serializable
 
 
@@ -12,8 +13,3 @@ class Translation(Serializable):
     @staticmethod
     def str_name():
         return 'translation'
-
-    def __eq__(self, other):
-        return super().__eq__(other)
-
-

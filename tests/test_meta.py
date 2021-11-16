@@ -2,7 +2,6 @@ from uff import __version__
 
 
 def test_version():
-
     if type(__version__) is not str:
         raise TypeError("Version string incorrect")
 

@@ -1,6 +1,7 @@
 from dataclasses import dataclass
-from uff.event import Event
+
 from uff.uff_io import Serializable
+from uff.utils import PRIMITIVE_INTS
 
 
 @dataclass
@@ -13,12 +14,15 @@ class TimedEvent(Serializable):
     time_offset (float):    Time offset relative to start of the sequence repetition (frame) [s]
 
     """
-    event: Event
+    event: int
     time_offset: float
+
+    def serialize(self):
+        assert isinstance(
+            self.event, PRIMITIVE_INTS
+        ), 'TimedEvent.event should be index of the uff.event.'
+        return super().serialize()
 
     @staticmethod
     def str_name():
         return 'sequence'
-
-    def __eq__(self, other):
-        return super().__eq__(other)

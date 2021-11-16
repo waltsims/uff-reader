@@ -1,7 +1,11 @@
 import os
 
-import numpy as np
 import h5py
+import numpy as np
+
+PRIMITIVE_INTS = (int, np.int32, np.int64)
+PRIMITIVE_FLOATS = (float, np.float32, np.float64)
+PRIMITIVES = (np.ndarray, bytes, str) + PRIMITIVE_INTS + PRIMITIVE_FLOATS
 
 
 def strip_prefix_from_keys(old_dict: dict, prefix: str):
@@ -44,14 +48,13 @@ def _recursively_save_dict_contents_to_group(h5file, path, dic):
         argument => Tuple(data: dict, attrs: dict)
     ....
     """
-    BASIC_DATATYPES = (np.ndarray, np.int64, np.float64, bytes, int, float)
 
     for key, item in dic.items():
         if isinstance(item, str):
             # Strings will be stored as list of lists where each element is a byte character
             # TODO: This should save as a string, but the comparison files have lists of chars from matlab.
             h5file.create_dataset(path + key, data=[list(c) for c in item], dtype='|S1')
-        elif isinstance(item, BASIC_DATATYPES):
+        elif isinstance(item, PRIMITIVES):
             # Primitive types stored directly
             h5file[path + key] = item
         elif isinstance(item, dict):
@@ -104,17 +107,17 @@ def _decode_from_hdf5(item):
     output: object
         Converted input item
     """
-    is_none_str     = isinstance(item, str) and item == "__none__"
-    is_none_byte    = isinstance(item, bytes) and item == b"__none__"
-    is_byte_arr     = isinstance(item, (bytes, bytearray))
-    is_ndarray      = isinstance(item, np.ndarray)
-    is_bool         = isinstance(item, np.bool_)
+    is_none_str =  isinstance(item, str) and item == "__none__"
+    is_none_byte = isinstance(item, bytes) and item == b"__none__"
+    is_byte_arr =  isinstance(item, (bytes, bytearray))
+    is_ndarray =   isinstance(item, np.ndarray)
+    is_bool =      isinstance(item, np.bool_)
 
     if is_none_str or is_none_byte:
         output = None
     elif is_byte_arr:
         output = item.decode()
-    elif is_ndarray :
+    elif is_ndarray:
         if item.size == 0:
             output = item
         elif item.size == 1:
@@ -140,13 +143,13 @@ def is_keys_str_decimals(dictionary: dict):
         True if keys are numerical strings
     """
     keys = dictionary.keys()
-    are_decimals = [type(k) == str and k.isdecimal() for k in keys]
+    are_decimals = [isinstance(k, str) and k.isdecimal() for k in keys]
     return all(are_decimals)
 
 
 def is_keys_contain(dictionary: dict, substr: str = 'sequence'):
     keys = dictionary.keys()
-    are_containing = [type(k) == str and substr in k for k in keys]
+    are_containing = [isinstance(k, str) and substr in k for k in keys]
     return all(are_containing)
 
 
@@ -165,9 +168,9 @@ def is_version_compatible(version: dict, expected_version: tuple) -> bool:
     #             version['minor'] == float(uff.__version_info__[1]) and
     #             version['patch'] == float(uff.__version_info__[2]))
     major, minor, patch = expected_version
-    return bool(version['major'] == major and
-                version['minor'] == minor and
-                version['patch'] == patch)
+    return bool(version['major'] == major
+                and version['minor'] == minor
+                and version['patch'] == patch)
 
 
 def load_uff_dict(path):

@@ -1,1 +1,2 @@
 tests/data/*.uff filter=lfs diff=lfs merge=lfs -text
+tests/data/*.h5 filter=lfs diff=lfs merge=lfs -text

@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+
 from uff.aperture import Aperture
 from uff.origin import Origin
 from uff.uff_io import Serializable
@@ -12,7 +13,13 @@ class Wave(Serializable):
 
     Attributes:
         origin 	(WaveOrigin):       Geometric origin of the wave.
-        type (WaveType):         	enumerated type (int) (converging = 0, diverging = 1, plane = 2, cylindrical = 3, photoacoustic = 4, default = 0)
+        type (WaveType):         	enumerated type (int)
+                                    (converging = 0,
+                                    diverging = 1,
+                                    plane = 2,
+                                    cylindrical = 3,
+                                    photoacoustic = 4,
+                                    default = 0)
         aperture (Aperture):     	Description of the aperture used to produce the wave
         excitation 	(int): 	        (Optional) index to the unique excitation in the parent group
     """
@@ -35,6 +42,3 @@ class Wave(Serializable):
     wave_type: WaveType
     aperture: Aperture
     excitation: int = None
-
-    def __eq__(self, other):
-        return super().__eq__(other)
