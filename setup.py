@@ -12,4 +12,9 @@ setup(
     author_email='walter.simson@tum.de',
     # url='',
     packages=['uff'],
-    package_dir={'': 'src'})
+    package_dir={'': 'src'},
+    install_requires=['numpy>=1.20',
+                      'pytest',
+                      'h5py',
+                      'tqdm', ]
+)
