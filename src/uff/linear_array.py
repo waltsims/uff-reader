@@ -1,5 +1,6 @@
-from dataclasses import dataclass 
-from probe import Probe
+from dataclasses import dataclass
+
+from uff.probe import Probe
 
 
 @dataclass
@@ -17,10 +18,7 @@ class LinearArray(Probe):
     def str_name(self):
         return 'probe.linear_array'
 
-    number_elements:int
-    pitch:float
-    element_width:float
-    element_height:float
-
-    def __eq__(self, other):
-        return super().__eq__(other)
+    number_elements: int
+    pitch: float
+    element_width: float
+    element_height: float

@@ -1,6 +1,7 @@
-import numpy as np
 from dataclasses import dataclass
 from typing import List
+
+import numpy as np
 
 from uff import Probe, Wave, Event, TimedEvent
 from uff.excitation import Excitation
@@ -14,28 +15,32 @@ class ChannelData(Serializable):
 
     Notes:
 
-    The parameter authors identifies the authors of the data; description describes the acquisition scheme, motivation and application;
-    local_time and country_code identify the time and place the data were acquired; system describes the hardware used in the acquisition;
-    sound_speed contains the reference speed of sound that was used in the system to produce the transmitted waves;
-    and repetition_rate is the sequence repetition rate, also referred to as framerate in some scenarios.
+    The parameter authors identifies the authors of the data; description describes the acquisition scheme,
+    motivation and application; local_time and country_code identify the time and place the data were acquired;
+    system describes the hardware used in the acquisition; sound_speed contains the reference speed of sound that was
+    used in the system to produce the transmitted waves; and repetition_rate is the sequence repetition rate,
+    also referred to as framerate in some scenarios.
 
-    The object uff.channel_data contains all the probes used in the acquisition, a list of the unique_waves that have been transmitted,
-    and a list of the unique_events that form the sequence. The sequence is specified as an array of uff.timed_events, each member
-    containing a reference to an event, and the time_offset since the beginning of the current repetition, also known as frame.
+    The object uff.channel_data contains all the probes used in the acquisition, a list of the unique_waves that have
+    been transmitted, and a list of the unique_events that form the sequence. The sequence is specified as an array
+    of uff.timed_events, each member containing a reference to an event, and the time_offset since the beginning of
+    the current repetition, also known as frame.
 
     The HDF5 dataset data contains the channel data, organized as a matrix of dimensions (HDF5 notation), :
 
     [frames x events x channels x samples]
 
-    where samples is the number of temporal samples acquired by the system, channels is the number of active channels, unique_events
-    is the number of events in the sequence (not unique events), and repetitions is the number of times the described sequence was repeated.
-    Notice that "HDF5 uses C storage conventions, assuming that the last listed dimension is the fastest-changing dimension and the
-    first-listed dimension is the slowest changing." (https://support.hdfgroup.org/HDF5/doc1.6/UG/12_Dataspaces.html).
-    This means that by accessing the data with MATLAB's HDF5 API or Python's h5py the dimension order will be:
+    where samples is the number of temporal samples acquired by the system, channels is the number of active
+    channels, unique_events is the number of events in the sequence (not unique events), and repetitions is the
+    number of times the described sequence was repeated. Notice that "HDF5 uses C storage conventions, assuming that
+    the last listed dimension is the fastest-changing dimension and the first-listed dimension is the slowest
+    changing." (https://support.hdfgroup.org/HDF5/doc1.6/UG/12_Dataspaces.html). This means that by accessing the
+    data with MATLAB's HDF5 API or Python's h5py the dimension order will be:
 
     [samples x channels x events x frames]
 
-    This proposal has the limitation of requiring that all event acquisitions have the same number of time samples and active channels
+    This proposal has the limitation of requiring that all event acquisitions have the same number of time samples
+    and active channels
 
     Attributes:
     authors	(str): 	                    (Optional) string with the authors of the data
@@ -43,7 +48,8 @@ class ChannelData(Serializable):
     local_time (str): 	                (Optional) string defining the time the dataset was acquired following ISO 8601
     country_code (str): 	            (Optional) string defining the country, following ISO 3166-1
     system (str): 	                    (Optional) string defining the system used to acquired the dataset
-    repetition_rate (float):            (Optional) Inverse of the time delay between consecutive repetitions of the whole sequence, often known as framerate
+    repetition_rate (float):            (Optional) Inverse of the time delay between consecutive repetitions of the
+                                        whole sequence, often known as framerate
     data (float): 	                    dataset of dimensions [frames x events x channels x samples] in HDF5
     probes (Probe):                     List of the probes used to transmit/recive the sequence
     unique_waves (Wave):                List of the unique waves (or beams) used in the sequence
@@ -58,7 +64,7 @@ class ChannelData(Serializable):
         return 'channel_data'
 
     def serialize(self):
-        serialized = super(ChannelData, self).serialize()
+        serialized = super().serialize()
 
         data = serialized.pop('data')
         if data.dtype == np.complex:
@@ -101,6 +107,3 @@ class ChannelData(Serializable):
     system: str = ""
     repetition_rate: float = None
     data: np.ndarray = 0.0  # could be complex or real
-
-    def __eq__(self, other):
-        return super().__eq__(other)

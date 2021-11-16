@@ -1,14 +1,15 @@
 from __future__ import annotations
-import abc
-from typing import List, Type
-import numpy as np
-import typing
 
-from uff.utils import *
+import abc
+import typing
+from typing import List, Type
+
+import numpy as np
+
+from uff.utils import PRIMITIVES, is_keys_str_decimals
 
 
 class Serializable(metaclass=abc.ABCMeta):
-
     @staticmethod
     @abc.abstractmethod
     def str_name():
@@ -16,6 +17,7 @@ class Serializable(metaclass=abc.ABCMeta):
 
     def serialize(self):
         serialized = {}
+        # TODO: fix import cycle
         from uff import WaveType
 
         for k, value in vars(self).items():
@@ -35,14 +37,12 @@ class Serializable(metaclass=abc.ABCMeta):
                         values.append(val.serialize())
                     elif isinstance(val, list):
                         keys2 = [f'{i:08d}' for i in range(1, len(val) + 1)]
-                        vals2 = [v for v in val]
-                        values.append(dict(zip(keys2, vals2)))
+                        values.append(dict(zip(keys2, val)))
                     else:
                         raise NotImplementedError
 
-                # values = [val.serialize() if not isinstance(value, primitives) else val for val in value]  # TODO clean it up
                 serialized[k] = dict(zip(keys, values))
-            elif isinstance(value, Serializable): #cls in Serializable.__subclasses__():
+            elif isinstance( value, Serializable):  # cls in Serializable.__subclasses__():
                 serialized[k] = value.serialize()
             elif isinstance(value, WaveType):
                 serialized[k] = value.value
@@ -80,8 +80,10 @@ class Serializable(metaclass=abc.ABCMeta):
     def all_subclasses(cls=None) -> List[Type[Serializable]]:
         if cls is None:
             cls = Serializable
-        subclasses = set(cls.__subclasses__()).union(
-            [s for c in cls.__subclasses__() for s in Serializable.all_subclasses(c)])
+        subclasses = set(cls.__subclasses__()).union([
+            s for c in cls.__subclasses__()
+            for s in Serializable.all_subclasses(c)
+        ])
         return list(subclasses)
 
     @staticmethod
@@ -129,9 +131,10 @@ class Serializable(metaclass=abc.ABCMeta):
                     if getattr(self, k) != getattr(other, k):
                         equal = False
                 except ValueError as err:
-                    print('Ooops! Something went wrong! Probably unsupported comparision. '
-                          'Try to override the __eq__ method & handle custom data structures properly. '
-                          'Error message is given below:')
+                    print(
+                        'Ooops! Something went wrong! Probably unsupported comparision. '
+                        'Try to override the __eq__ method & handle custom data structures properly. '
+                        'Error message is given below:')
                     raise err
 
         if not equal:

@@ -9,13 +9,14 @@ from uff.uff_io import Serializable
 class TransmitSetup(Serializable):
     """
     UFF class to describe the transmit event (probe/channels, waves, excitations, etc.).
-    
 
     Attributes:
-        probe 	(int):                      	Index of the uff.probe used for transmit within the list of probes in the uff.channel_data structure
-        transmit_waves (list(TransmitWave)): 	List of transmit waves used in this event with their respective time offset and weight
+        probe 	(int):                      	Index of the uff.probe used for transmit within the list of probes in
+                                                the uff.channel_data structure
+        transmit_waves (list(TransmitWave)): 	List of transmit waves used in this event with their respective time
+                                                offset and weight
         channel_mapping (list(list(int))): 	    Map of transmit channels to transducer elements
-        sampled_delays (float):	                (Optional) Transmit delay line as set in the system for active channels [s].
+        sampled_delays (float):	                (Optional) Transmit delay as set in the system for active channels [s].
         sampled_excitations	(float):        	(Optional) Matrix of sampled excitation waveforms [normalized units].
         sampling_frequency 	(float): 	        (Optional) Sampling frequency of the excitation waveforms [Hz]
         transmit_voltage	(float): 	        (Optional) Peak amplitude of the pulse generator [V]
@@ -32,6 +33,3 @@ class TransmitSetup(Serializable):
     sampled_excitations: float = None
     sampling_frequency: float = None
     transmit_voltage: float = None
-
-    def __eq__(self, other):
-        return super().__eq__(other)

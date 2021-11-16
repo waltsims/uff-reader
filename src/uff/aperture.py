@@ -1,6 +1,6 @@
 from dataclasses import dataclass
+
 from uff.position import Position
-from uff.origin import Origin
 from uff.uff_io import Serializable
 
 
@@ -10,24 +10,23 @@ class Aperture(Serializable):
     UFF class to define analytically the aperture use in an ultrasound wave.
 
     Notes:
-    The class aperture defines the transmit apodization profile. In this case 
+    The class aperture defines the transmit apodization profile. In this case
     origin defines the center of the aperture. The size of the aperture can
-    be described with fixed_size, or with f_number in which case the aperture 
-    size is d/f_number where d is the distance between uff.wave.origin and 
-    uff.wave.aperture.origin. The parameter window is a string describing 
+    be described with fixed_size, or with f_number in which case the aperture
+    size is d/f_number where d is the distance between uff.wave.origin and
+    uff.wave.aperture.origin. The parameter window is a string describing
     the apodization window.
 
     Attributes:
         origin (Position): 	    Location of the aperture center in space.
-        window (str): 	        String defining the apodization window type and 
+        window (str): 	        String defining the apodization window type and
                                 parameter (e.g., 'Hamming', 'Gauss(8)', 'Tukey(0.5)')
-                            
         f_number list[float]:	Desired F-number of the aperture [Az, El]
-        fixed_size list[float]: If non-zero, this overwrites the size of the aperture 
+        fixed_size list[float]: If non-zero, this overwrites the size of the aperture
                                 in [m] [Az, El]
-        minimun_size (float):   (Optional) If non-zero, this sets a limit for the minimum 
+        minimun_size (float):   (Optional) If non-zero, this sets a limit for the minimum
                                 dynamic aperture in m [Az, El]
-        maximum_size (float): 	(Optional) If non-zero, this sets a limit for the maximum 
+        maximum_size (float): 	(Optional) If non-zero, this sets a limit for the maximum
                                 dynamic aperture in m [Az, El]
     """
 
@@ -48,17 +47,3 @@ class Aperture(Serializable):
     window: str = 'rectwin'
     minimum_size: float = None
     maximum_size: float = None
-
-    def __eq__(self, other):
-        return super().__eq__(other)
-
-    # def __eq__(self, other):
-    #     if not isinstance(other, Aperture):
-    #         return False
-    #
-    #     return self.position == other.position and \
-    #            self.fixed_size == other.f_number and \
-    #            self.f_number == other.f_number and \
-    #            self.window == other.window and \
-    #            self.minimum_size == other.minimum_size and \
-    #            self.maximum_size == other.maximum_size

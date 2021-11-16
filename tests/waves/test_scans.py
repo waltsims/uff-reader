@@ -1,7 +1,7 @@
-import uff
-from uff import *
 import numpy as np
 
+from uff import Aperture, Position, PlaneWaveOrigin, Wave, WaveType, SphericalWaveOrigin, TransmitWave, TransmitSetup, \
+    ReceiveSetup, Event
 from uff import Rotation
 
 
@@ -17,8 +17,6 @@ def test_linear_scan_focused_beam():
         a = Aperture(f_number=1, fixed_size=[40e-3, 12e-3], origin=Position())
         waves.append(Wave(origin=p, aperture=a, wave_type=WaveType.CONVERGING))
 
-    # TODO: add plot and visualization functionality (should be excluded from tests)
-
 
 def test_plane_wave_sequence():
     n_waves = 11
@@ -29,7 +27,9 @@ def test_plane_wave_sequence():
     waves = []
 
     for wave_idx in range(n_waves):
-        a = Aperture(fixed_size=[40e-3, 12e-3], origin=Position(), window='hamming')
+        a = Aperture(fixed_size=[40e-3, 12e-3],
+                     origin=Position(),
+                     window='hamming')
         origin = PlaneWaveOrigin(rotation=Rotation(y=angles[wave_idx]))
         waves.append(Wave(origin=origin, aperture=a, wave_type=WaveType.PLANE))
 
@@ -43,11 +43,14 @@ def test_sector_scan_diverging_beams():
 
     for angle in azimuth:
         w = Wave(origin=SphericalWaveOrigin(
-            position=Position(x=virtual_source_distance * np.sin(angle), z=-virtual_source_distance * np.cos(angle))),
-            wave_type=WaveType.DIVERGING, aperture=Aperture(window='rectwin', origin=Position(), fixed_size=[18e-3, 12e-3]))
+            position=Position(x=virtual_source_distance * np.sin(angle),
+                              z=-virtual_source_distance * np.cos(angle))),
+            wave_type=WaveType.DIVERGING,
+            aperture=Aperture(window='rectwin',
+                              origin=Position(),
+                              fixed_size=[18e-3, 12e-3]))
 
         waves.append(w)
-    pass
 
 
 def test_sector_scan_focus_beams():
@@ -58,15 +61,14 @@ def test_sector_scan_focus_beams():
     waves = []
 
     for angle in azimuth:
-        w = Wave(origin=SphericalWaveOrigin(
-            position=Position(x=focal_depth * np.sin(angle), z=focal_depth * np.cos(angle))),
-            wave_type=WaveType.CONVERGING, aperture=Aperture(window='rectwin', origin=Position(), fixed_size=[18e-3, 12e-3]))
+        w = Wave(origin=SphericalWaveOrigin(position=Position(
+            x=focal_depth * np.sin(angle), z=focal_depth * np.cos(angle))),
+            wave_type=WaveType.CONVERGING,
+            aperture=Aperture(window='rectwin',
+                              origin=Position(),
+                              fixed_size=[18e-3, 12e-3]))
 
         waves.append(w)
-    pass
-
-
-    pass
 
 
 def test_scan_mlt():
@@ -82,20 +84,31 @@ def test_scan_mlt():
         y_pos = focal_depth * np.sin(angle)
         p: Position = Position(y=y_pos, x=x_pos)
         origin = SphericalWaveOrigin(position=p)
-        a: Aperture = Aperture(fixed_size=[16e-3, 12e-3], origin=Position(), window='Tukey(0.5)')
-        waves.append(Wave(origin=origin, aperture=a, wave_type=WaveType.CONVERGING))
+        a: Aperture = Aperture(fixed_size=[16e-3, 12e-3],
+                               origin=Position(),
+                               window='Tukey(0.5)')
+        waves.append(
+            Wave(origin=origin, aperture=a, wave_type=WaveType.CONVERGING))
 
     events = []
     # Merge two beams into each event
     for i in range(int(n_waves / n_mlt)):
         for wave_n in range(n_mlt):
-            tw = TransmitWave(time_zero_reference_point=0, wave=waves[int(i + wave_n * n_waves / n_mlt)])
+            tw = TransmitWave(time_zero_reference_point=0,
+                              wave=waves[int(i + wave_n * n_waves / n_mlt)])
             # TODO: currently many Nones passed since all arguments are required. Fix by setting default parameters.
-            ts = TransmitSetup('transmit_waves', [tw], channel_mapping=None, sampled_delays=None,
-                               sampled_excitations=None, sampling_frequency=None, transmit_voltage=None)
+            ts = TransmitSetup('transmit_waves', [tw],
+                               channel_mapping=None,
+                               sampled_delays=None,
+                               sampled_excitations=None,
+                               sampling_frequency=None,
+                               transmit_voltage=None)
             # TODO: currently many Nones passed since all arguments are required. Fix by setting default parameters.
-            rs = ReceiveSetup(probe=None, time_offset=None, channel_mapping=None, sampling_frequency=None,
-                              tgc_profile=None, tgc_sampling_frequency=None, modulation_frequency=None)
+            rs = ReceiveSetup(probe=None,
+                              time_offset=None,
+                              channel_mapping=None,
+                              sampling_frequency=None,
+                              tgc_profile=None,
+                              tgc_sampling_frequency=None,
+                              modulation_frequency=None)
             events.append(Event(transmit_setup=ts, receive_setup=rs))
-
-    pass
