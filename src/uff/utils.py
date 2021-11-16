@@ -53,20 +53,16 @@ def _recursively_save_dict_contents_to_group(h5file, path, dic):
         if isinstance(item, str):
             # Strings will be stored as list of lists where each element is a byte character
             # TODO: This should save as a string, but the comparison files have lists of chars from matlab.
-            h5file.create_dataset(path + key,
-                                  data=[list(c) for c in item],
-                                  dtype='|S1')
+            h5file.create_dataset(path + key, data=[list(c) for c in item], dtype='|S1')
         elif isinstance(item, PRIMITIVES):
             # Primitive types stored directly
             h5file[path + key] = item
         elif isinstance(item, dict):
-            _recursively_save_dict_contents_to_group(h5file, path + key + '/',
-                                                     item)
+            _recursively_save_dict_contents_to_group(h5file, path + key + '/', item)
             if is_keys_str_decimals(item):
                 h5file[path + key].attrs['array_size'] = len(item.keys())
             if path + key == '/uff.channel_data/probes/00000001':
-                h5file[path +
-                       key].attrs['probe_type'] = 'uff.probe.linear_array'
+                h5file[path + key].attrs['probe_type'] = 'uff.probe.linear_array'
         else:
             raise ValueError(f'Cannot save {type(item)} type')
 
@@ -89,8 +85,7 @@ def _recursively_load_dict_contents_from_group(h5file, path):
             ans[key] = _decode_from_hdf5(item[()])
 
         elif isinstance(item, h5py._hl.group.Group):
-            ans[key] = _recursively_load_dict_contents_from_group(
-                h5file, path + key + '/')
+            ans[key] = _recursively_load_dict_contents_from_group(h5file, path + key + '/')
     return ans
 
 
@@ -112,11 +107,11 @@ def _decode_from_hdf5(item):
     output: object
         Converted input item
     """
-    is_none_str = isinstance(item, str) and item == "__none__"
+    is_none_str =  isinstance(item, str) and item == "__none__"
     is_none_byte = isinstance(item, bytes) and item == b"__none__"
-    is_byte_arr = isinstance(item, (bytes, bytearray))
-    is_ndarray = isinstance(item, np.ndarray)
-    is_bool = isinstance(item, np.bool_)
+    is_byte_arr =  isinstance(item, (bytes, bytearray))
+    is_ndarray =   isinstance(item, np.ndarray)
+    is_bool =      isinstance(item, np.bool_)
 
     if is_none_str or is_none_byte:
         output = None
@@ -173,7 +168,8 @@ def is_version_compatible(version: dict, expected_version: tuple) -> bool:
     #             version['minor'] == float(uff.__version_info__[1]) and
     #             version['patch'] == float(uff.__version_info__[2]))
     major, minor, patch = expected_version
-    return bool(version['major'] == major and version['minor'] == minor
+    return bool(version['major'] == major
+                and version['minor'] == minor
                 and version['patch'] == patch)
 
 
@@ -227,15 +223,11 @@ def verify_correctness(output_path, ref_path):
             for ds in ref_datasets:
                 out_val = out_h5[ds][()]
                 ref_val = ref_h5[ds][()]
-                if isinstance(out_val, np.ndarray) and isinstance(
-                        ref_val, np.ndarray):
+                if isinstance(out_val, np.ndarray) and isinstance(ref_val, np.ndarray):
                     if out_val.dtype == '|S1' and ref_val.dtype == '|S1':
-                        assert np.all(out_val == ref_val
-                                      ), f'Dataset [{ds}] does not match!'
+                        assert np.all(out_val == ref_val), f'Dataset [{ds}] does not match!'
                     else:
-                        assert np.allclose(
-                            out_val,
-                            ref_val), f'Dataset [{ds}] does not match!'
+                        assert np.allclose(out_val, ref_val), f'Dataset [{ds}] does not match!'
                 else:
                     assert out_val == ref_val, f'Dataset [{ds}] does not match!'
     print('Passed value-wise correctness checks!')

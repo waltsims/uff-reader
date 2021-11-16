@@ -23,5 +23,3 @@ def test_instantiation():
               pitch=0,
               element_height=0.15,
               element_width=0.3)
-
-    return p

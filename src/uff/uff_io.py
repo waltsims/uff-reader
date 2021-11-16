@@ -42,15 +42,12 @@ class Serializable(metaclass=abc.ABCMeta):
                         raise NotImplementedError
 
                 serialized[k] = dict(zip(keys, values))
-            elif isinstance(
-                    value,
-                    Serializable):  # cls in Serializable.__subclasses__():
+            elif isinstance( value, Serializable):  # cls in Serializable.__subclasses__():
                 serialized[k] = value.serialize()
             elif isinstance(value, WaveType):
                 serialized[k] = value.value
             else:
-                raise TypeError(
-                    f'Unknown type [{type(value)}] for serialization!')
+                raise TypeError(f'Unknown type [{type(value)}] for serialization!')
         return serialized
 
     @classmethod
@@ -61,13 +58,11 @@ class Serializable(metaclass=abc.ABCMeta):
             assert k in fields, f'Class {cls} does not have property named {k}.'
             if isinstance(v, PRIMITIVES):
                 continue
-            assert isinstance(v,
-                              dict), f'{type(v)} did not pass type-assertion'
+            assert isinstance(v, dict), f'{type(v)} did not pass type-assertion'
 
             # property_cls = Serializable.get_subcls_with_name(k)
             property_cls = fields[k]
-            if isinstance(property_cls,
-                          typing._GenericAlias):  # TODO explain this
+            if isinstance(property_cls, typing._GenericAlias):  # TODO explain this
                 property_cls = property_cls.__args__[0]
             assert property_cls is not None, f'Class {k} is not Serializable!'
 
@@ -76,9 +71,7 @@ class Serializable(metaclass=abc.ABCMeta):
             else:
                 # TODO: assert keys are correct => ascending order starting from 000001
                 list_of_objs = list(v.values())
-                list_of_objs = [
-                    property_cls.deserialize(item) for item in list_of_objs
-                ]
+                list_of_objs = [property_cls.deserialize(item) for item in list_of_objs]
                 data[k] = list_of_objs
 
         return cls(**data)
