@@ -14,7 +14,6 @@ setup(
     packages=['uff'],
     package_dir={'': 'src'},
     install_requires=['numpy>=1.20',
-                      'pytest',
-                      'h5py',
-                      'tqdm', ]
-)
+                      'pytest>=6.2.4',
+                      'h5py>=3.5.0',
+                      'tqdm>=4.60.0'])
