@@ -15,7 +15,6 @@ class Serializable(metaclass=abc.ABCMeta):
         return
 
     def serialize(self):
-        primitives = (np.ndarray, np.int64, np.float64, str, bytes, int, float)
         serialized = {}
         from uff import WaveType
 
@@ -23,14 +22,14 @@ class Serializable(metaclass=abc.ABCMeta):
             if value is None:
                 continue
 
-            if isinstance(value, primitives):
+            if isinstance(value, PRIMITIVES):
                 serialized[k] = value
                 continue
             elif isinstance(value, list):
                 keys = [f'{i:08d}' for i in range(1, len(value) + 1)]
                 values = []
                 for val in value:
-                    if isinstance(val, primitives):
+                    if isinstance(val, PRIMITIVES):
                         values.append(val)
                     elif isinstance(val, Serializable):
                         values.append(val.serialize())
@@ -53,12 +52,11 @@ class Serializable(metaclass=abc.ABCMeta):
 
     @classmethod
     def deserialize(cls: object, data: dict):
-        primitives = (np.ndarray, np.int64, np.float64, str, bytes, int, float)
         fields = cls.__annotations__
 
         for k, v in data.items():
-            assert k in fields
-            if isinstance(v, primitives):
+            assert k in fields, f'Class {cls} does not have property named {k}.'
+            if isinstance(v, PRIMITIVES):
                 continue
             assert isinstance(v, dict), f'{type(v)} did not pass type-assertion'
 

@@ -31,6 +31,10 @@ class Probe(Serializable):
     def str_name():
         return 'probes'
 
+    def serialize(self):
+        assert isinstance(self.element_geometry, list), 'Probe.element_geometry should be a list of element geometries!'
+        return super().serialize()
+
     # @classmethod
     # def deserialize(cls, data: dict):
     #     pass

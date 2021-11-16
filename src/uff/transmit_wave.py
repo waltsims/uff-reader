@@ -25,8 +25,8 @@ class TransmitWave(Serializable):
     wave: int
     # TODO: should be of type position but current dynamic instantiation does not allow for that.
     time_zero_reference_point: TimeZeroReferencePoint #Position
-    time_offset: float = 0
-    weight: float = 1
+    time_offset: float = 0.0
+    weight: float = 1.0
 
     @staticmethod
     def str_name():

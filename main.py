@@ -12,7 +12,7 @@ if __name__ == '__main__':
     # example_probe_curvilinear.uff                 =>      BLIND LOAD
     # example_probe_matrix.uff                      =>      BLIND LOAD
 
-    ref_uff_path = '/Users/faridyagubbayli/Work/uff_references/fieldII_converging_wave_mlt_sector.uff'
+    ref_uff_path = 'tests/data/fieldII_converging_wave_mlt_sector.uff'
     uff_dict = load_uff_dict(ref_uff_path)
 
     version = uff_dict.pop('version')
