@@ -15,10 +15,12 @@ to install run:
 
 ``` python3
 from uff import UFF
-from uff.utils import load_uff_dict
 
 # load uff object from uff file <file-name>
-uff_object = UFF.deserialize(load_uff_dict('<file-name>'))
+uff_object = UFF.load('<file-name>'))
+
+# print uff summary
+uff_object.summary
 ```
 
 
