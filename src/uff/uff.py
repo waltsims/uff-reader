@@ -5,7 +5,7 @@ import numpy as np
 import uff
 from uff import ChannelData
 from uff.uff_io import Serializable
-from uff.utils import is_keys_str_decimals, snake_to_camel_case, save_dict_to_hdf5
+from uff.utils import is_keys_str_decimals, snake_to_camel_case, save_dict_to_hdf5, load_uff_dict
 
 
 class UFF(Serializable):
@@ -56,7 +56,7 @@ class UFF(Serializable):
             if k != 'channel_data':
                 warnings.warn(
                     f'\nWarning: The UFF standard specifies how objects of class uff.channel_data are '
-                    f'written.\n Although other properties can be saved to the file, they are very likely '
+                    f'written.\n Although other properties can be saved to the file, they very likely '
                     f'cannot be read back.\n In order to avoid unnecessary crashes, property `uff.{k}` will '
                     f'not be deserialized.')
                 continue
@@ -75,6 +75,11 @@ class UFF(Serializable):
 
         return obj
 
+    @classmethod
+    def load(cls: object, file_name: str):
+        uff_dict = load_uff_dict(file_name)
+        return cls.deserialize(uff_dict)
+
     @staticmethod
     def check_version(uff_h5):
         if uff_h5['version']:
@@ -90,6 +95,15 @@ class UFF(Serializable):
         else:
             raise Exception(
                 "Not a valid uff file. UFF version field is missing")
+
+    @property
+    def summary(self):
+        print(f'Summary:\n'
+              f'\tSystem:\t{self.channel_data.system}\n'
+              f'\tAuthors:\t{self.channel_data.authors}\n'
+              f'\tCountry:\t{self.channel_data.country_code}\n'
+              f'\tLocal Time:\t{self.channel_data.local_time}\n'
+              f'\tDescription:\t{self.channel_data.description}\n')
 
     def _init_obj_from_param_list(self, class_name: str, params: dict):
         class_ = globals()[class_name]
