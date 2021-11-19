@@ -32,11 +32,11 @@ def test_uff_save_load():
         ref_uff_path = os.path.join(FIXTURE_DIR, ref_file)
         uff_dict = load_uff_dict(ref_uff_path)
 
-        version = uff_dict.pop('version')
+        version = uff_dict['version']
         assert is_version_compatible(version, (0, 3, 0))
         print("good version")
 
-        uff_new = UFF.deserialize(uff_dict)
+        uff_new = UFF.load(ref_uff_path)
 
         uff_new_save_path = 'new.uff'
         uff_new.save(uff_new_save_path, version)
