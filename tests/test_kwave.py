@@ -94,10 +94,10 @@ def create_uff(data_type='real'):
             sampling_frequency=1 / dt)
     ]
 
-    if data_type is 'complex':
+    if data_type == 'complex':
         data = np.random.random((Nx, Ny, Nz)) + np.random.random((Nx, Ny, Nz)) * 1j
         data_new = np.empty((data.shape[:1]) + (n_elem,), dtype=complex)
-    elif data_type is 'real':
+    elif data_type == 'real':
         data = np.random.random((Nx, Ny, Nz))
         data_new = np.empty((data.shape[:1]) + (n_elem,))
     else:

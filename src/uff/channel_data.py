@@ -67,7 +67,7 @@ class ChannelData(Serializable):
         serialized = super().serialize()
 
         data = serialized.pop('data')
-        if data.dtype == np.complex:
+        if data.dtype == complex:
             serialized['data_imag'] = data.imag
         serialized['data_real'] = data.real
 
