@@ -17,7 +17,7 @@ to install run:
 from uff import UFF
 
 # load uff object from uff file <file-name>
-uff_object = UFF.load('<file-name>'))
+uff_object = UFF.load('<file-name>')
 
 # print uff summary
 uff_object.summary
