@@ -15,5 +15,5 @@ setup(
     package_dir={'': 'src'},
     install_requires=['numpy>=1.20',
                       'pytest>=6.2.4',
-                      'requests>=2.26.0'
+                      'requests>=2.26.0',
                       'h5py>=3.5.0'])
