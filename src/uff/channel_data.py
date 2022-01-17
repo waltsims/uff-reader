@@ -94,7 +94,7 @@ class ChannelData(Serializable):
     #     print('=' * 20)
     #     print(remaining_attrs)
 
-    probes: Probe
+    probes: List[Probe]
     unique_waves: List[Wave]
     unique_events: List[Event]
     unique_excitations: List[Excitation]
