@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from uff.recieve_setup import ReceiveSetup
+from uff.receive_setup import ReceiveSetup
 from uff.transmit_setup import TransmitSetup
 from uff.uff_io import Serializable
 
