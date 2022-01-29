@@ -32,7 +32,7 @@ class Probe(Serializable):
         return 'probes'
 
     def serialize(self):
-        assert isinstance(self.element_geometry, list), \
+        assert self.element_geometry is None or isinstance(self.element_geometry, list), \
             'Probe.element_geometry should be a list of element geometries!'
         return super().serialize()
 
