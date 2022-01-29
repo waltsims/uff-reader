@@ -46,9 +46,9 @@ class Probe(Serializable):
     element_height: float
     element_width: float
     ##  <<
-    transform: Transform
+    transform: Transform = None
     # TODO for conformity call `elements`
-    element: List[Element]
+    element: List[Element] = None
     element_impulse_response: List[ImpulseResponse] = None
     focal_length: float = None
     # >> TODO: These parameters are not defined in the standard
