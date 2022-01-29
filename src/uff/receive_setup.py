@@ -1,11 +1,10 @@
 from dataclasses import dataclass
 from typing import List
-
-from uff.uff_io import Serializable
+from uff.tx_rx_base import TxRxSetupBase
 
 
 @dataclass
-class ReceiveSetup(Serializable):
+class ReceiveSetup(TxRxSetupBase):
     """
     Describes the setup used to receive and sample data. If more than one probe is used in reception, this is a list
     of setups.

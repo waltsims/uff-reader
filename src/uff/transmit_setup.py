@@ -2,11 +2,11 @@ from dataclasses import dataclass
 from typing import List
 
 from uff.transmit_wave import TransmitWave
-from uff.uff_io import Serializable
+from uff.tx_rx_base import TxRxSetupBase
 
 
 @dataclass
-class TransmitSetup(Serializable):
+class TransmitSetup(TxRxSetupBase):
     """
     UFF class to describe the transmit event (probe/channels, waves, excitations, etc.).
 
