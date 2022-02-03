@@ -17,7 +17,7 @@ from uff.event import Event
 from uff.excitation import Excitation
 from uff.transmit_setup import TransmitSetup
 from uff.timed_event import TimedEvent
-from uff.recieve_setup import ReceiveSetup
+from uff.receive_setup import ReceiveSetup
 from uff.probe import Probe
 from uff.time_zero_reference_point import TimeZeroReferencePoint
 from uff.channel_data import ChannelData
