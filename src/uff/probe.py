@@ -40,8 +40,16 @@ class Probe(Serializable):
     # def deserialize(cls, data: dict):
     #     pass
 
-    transform: Transform
-    element: List[Element]
+    # >> TODO: These parameters are not defined in the standard
+    number_elements: int
+    pitch: float
+    element_height: float
+    element_width: float
+    ##  <<
+    transform: Transform = None
+    # TODO for conformity call `elements`
+    element: List[Element] = None
+      
     element_impulse_response: List[ImpulseResponse] = None
     focal_length: float = None
     element_geometry: List[ElementGeometry] = None
