@@ -1,32 +1,24 @@
-from dataclasses import dataclass
+from typing import ClassVar
 
-import numpy as np
+from attrs import define
 
-from uff.uff_io import Serializable
+from numpy.typing import NDArray
 
 
-@dataclass
-class Excitation(Serializable):
+@define
+class Excitation:
     """
     Describes the excitation applied to an element.
 
     Attributes:
-        pulse_shape (str): 	            String describing the pulse shape (e.g., sinusoidal, square wave, chirp),
-                                        including necessary parameters
-        waveform (float):               Vector containing the sampled excitation waveform [normalized units]
-        sampling_frequency (float): 	Scalar containing the sampling frequency of the excitation waveform [Hz]
+    pulse_shape: String describing the pulse shape (e.g., sinusoidal, square wave, chirp),
+        including necessary parameters
+    waveform: Vector containing the sampled excitation waveform [normalized units]
+    sampling_frequency: Scalar containing the sampling frequency of the excitation waveform [Hz]
     """
 
-    @staticmethod
-    def str_name():
-        return 'unique_excitations'
-
-    def serialize(self):
-        assert isinstance(
-            self.waveform,
-            np.ndarray), 'Excitation.waveform should be an np.ndarray'
-        return super().serialize()
+    _str_name: ClassVar = "unique_excitations"
 
     pulse_shape: str
-    waveform: np.ndarray
+    waveform: NDArray
     sampling_frequency: float

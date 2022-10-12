@@ -1,44 +1,55 @@
-from dataclasses import dataclass
+from typing import ClassVar, Optional
+from enum import IntEnum
+
+from attrs import define
 
 from uff.aperture import Aperture
-from uff.origin import Origin
-from uff.uff_io import Serializable
-from uff.wave_type import WaveType
+from uff.wave_origin import WaveOrigin
 
 
-@dataclass
-class Wave(Serializable):
+class WaveType(IntEnum):
+    """wave_type
+    enumerated type (uint32) (
+        converging = 0,
+        diverging = 1,
+        plane = 2,
+        cylindrical = 3,
+        photoacoustic = 4,
+        default = 0
+    )
+    """
+
+    converging = 0
+    diverging = 1
+    plane = 2
+    cylindrical = 3
+    photoacoustic = 4
+
+
+@define
+class Wave:
     """
     UFF class to describe the geometry of a transmitted wave or beam.
 
+    TODO: custom deserialization code to check WaveType, then load
+    the corresponding WaveOrigin
+
     Attributes:
-        origin 	(WaveOrigin):       Geometric origin of the wave.
-        type (WaveType):         	enumerated type (int)
-                                    (converging = 0,
-                                    diverging = 1,
-                                    plane = 2,
-                                    cylindrical = 3,
-                                    photoacoustic = 4,
-                                    default = 0)
-        aperture (Aperture):     	Description of the aperture used to produce the wave
-        excitation 	(int): 	        (Optional) index to the unique excitation in the parent group
+    origin: Geometric origin of the wave.
+    type: enumerated type (int)
+        (converging = 0,
+        diverging = 1,
+        plane = 2,
+        cylindrical = 3,
+        photoacoustic = 4,
+        default = 0)
+    aperture: Description of the aperture used to produce the wave
+    excitation: (Optional) index to the unique excitation in the parent group
     """
 
-    @staticmethod
-    def str_name():
-        return 'unique_waves'
+    _str_name: ClassVar = "unique_waves"
 
-    @classmethod
-    def deserialize(cls: object, data: dict):
-        data['wave_type'] = data.pop('type')
-        return super().deserialize(data)
-
-    def serialize(self):
-        data = super().serialize()
-        data['type'] = data.pop('wave_type')
-        return data
-
-    origin: Origin
+    origin: WaveOrigin
     wave_type: WaveType
     aperture: Aperture
-    excitation: int = None
+    excitation: Optional[int] = None

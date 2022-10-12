@@ -1,15 +1,18 @@
-from dataclasses import dataclass
-from typing import List
+from typing import ClassVar, List
+
+from attrs import define
 
 from uff.position import Position
-from uff.uff_io import Serializable
 
 
-@dataclass
-class Perimeter(Serializable):
-    """Describes the geometry of an ultrasonic element."""
+@define
+class Perimeter:
+    """Describes the geometry of an ultrasonic element.
+
+    Attributes:
+    position: List of positions
+    """
+
+    _str_name: ClassVar = "perimeter"
+
     position: List[Position]
-
-    @staticmethod
-    def str_name():
-        return 'perimeter'

@@ -1,15 +1,17 @@
-from dataclasses import dataclass
-from typing import List
+from typing import ClassVar, List, Optional
+
+from attrs import define
 
 from uff.element import Element
 from uff.element_geometry import ElementGeometry
 from uff.impulse_response import ImpulseResponse
 from uff.transform import Transform
-from uff.uff_io import Serializable
+
+__all__ = ("Probe", "LinearArray", "CurvilinearArray", "MatrixArray")
 
 
-@dataclass
-class Probe(Serializable):
+@define
+class Probe:
     """
     Describes an generic ultrsound probe formed by a collection of elements.
 
@@ -27,65 +29,85 @@ class Probe(Serializable):
         uff.probe.matrix_array.
     """
 
-    @staticmethod
-    def str_name():
-        return 'probes'
+    _str_name: ClassVar = "probe"
 
-    def serialize(self):
-        assert self.element_geometry is None or isinstance(self.element_geometry, list), \
-            'Probe.element_geometry should be a list of element geometries!'
-        return super().serialize()
+    # def serialize(self):
+    # assert self.element_geometry is None or isinstance(self.element_geometry, list), \
+    # 'Probe.element_geometry should be a list of element geometries!'
+    # return super().serialize()
 
-    # @classmethod
-    # def deserialize(cls, data: dict):
-    #     pass
-
-    # >> TODO: These parameters are not defined in the standard
-    number_elements: int
-    pitch: float
-    element_height: float
-    element_width: float
-    ##  <<
-    transform: Transform = None
+    transform: Transform
     # TODO for conformity call `elements`
-    element: List[Element] = None
-      
-    element_impulse_response: List[ImpulseResponse] = None
-    focal_length: float = None
-    element_geometry: List[ElementGeometry] = None
-    # # >> TODO: These parameters are not defined in the standard
+    element: List[Element]
+    focal_length: Optional[float] = None
+    element_impulse_response: Optional[List[ImpulseResponse]] = None
+    element_geometry: Optional[List[ElementGeometry]] = None
+
+    # TODO: These parameters are not defined in the standard
     number_elements: int = 0
     pitch: float = 0
     element_height: float = 0
     element_width: float = 0
-    ##  <<
-    ## TODO: add element list factory to generate element list from these parameters,
-    # and getters to generate properties from these properties.
-    # OPEN QUESTION: what to do when file contains extra properties that do not conform to standard?
-    # TODO idea for getters
-    # @property
-    # def number_elements(self):
-    #     return len(self.element)
-    # @property
-    # def pitch(self):
-    #     # check if all element spacings are the same
-    #     # return pitch
-    #     # else:
-    #     # catch and warn of non-standard spacing
-    #     return len(self.element)
-    #
-    # @property
-    # def element_width(self):
-    #     # check for conformal element width
-    #     # return element_width
-    #     # else:
-    #     # catch and warn of non-conformal element width
-    #     pass
-    #
-    # @property
-    # def element_height(self):
-    #     # check for conformal element height
-    #     # return element_height
-    #     # else:
-    #     # catch and warn of non-conformal element height
-    #     pass
+
+
+class LinearArray(Probe):
+    """
+    Describes a linear array, made of identical elements, uniformly distributed on a line.
+
+    Attributes:
+    number_elements: Number of elements in the array
+    pitch: Distance between the acoustic ceneter of adyacent elements [m]
+    element_width: (Optional) Element size in the x-axis [m]
+    element_height: (Optional) Element size in the y-axis [m]
+    """
+
+    _str_name: ClassVar = "probe.linear_array"
+
+    number_elements: int
+    pitch: float
+    element_width: Optional[float]
+    element_height: Optional[float]
+
+
+class CurvilinearArray(Probe):
+    """
+    Describes a linear array, made of identical elements, uniformly distributed on a line.
+
+    Attributes:
+    number_elements: Number of elements in the array
+    pitch: Distance between the acoustic ceneter of adyacent elements [m]
+    radius: Radius of curvature of the curvilinear probe [m]
+    element_width: (Optional) Element size in the x-axis [m]
+    element_height: (Optional) Element size in the y-axis [m]
+    """
+
+    _str_name: ClassVar = "probe.curvilinear_array"
+
+    number_elements: int
+    pitch: float
+    radius: float
+    element_width: Optional[float] = None
+    element_height: Optional[float] = None
+
+
+class MatrixArray(Probe):
+    """
+    Describes a matrix array, made of identical elements, uniformly distributed on a 2D grid.
+
+    Attributes:
+    number_elements_x: of elements in the x-axis
+    pitch_x: Distance between the acoustic center of adjacent elements along the x-axis [m]
+    number_elements_y: of elements in the y-axis
+    pitch_y: Distance between the acoustic center of adjacent elements along the y-axis [m]
+    element_width: (Optional) Element size in the x-axis [m]
+    element_height: (Optional) Element size in the y-axis [m]
+    """
+
+    _str_name: ClassVar = "probe.matrix_array"
+
+    number_elements_x: int
+    number_elements_y: int
+    pitch_x: float
+    pitch_y: float
+    element_width: Optional[float] = None
+    element_height: Optional[float] = None

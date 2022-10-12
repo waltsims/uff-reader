@@ -8,10 +8,9 @@ def test_converging_wave():
     # Single convering wave
 
     # Geometric origin
-    aperture = Aperture(window='hanning',
-                        origin=Position(),
-                        f_number=2.1,
-                        fixed_size=[12e-3])
+    aperture = Aperture(
+        window="hanning", origin=Position(), f_number=2.1, fixed_size=[12e-3]
+    )
 
     wo = SphericalWaveOrigin()
     p = Position(x=20e-3, y=0, z=50e-3)
@@ -23,10 +22,9 @@ def test_diverging_wave():
     # Single divergin wave
 
     # Geometric origin
-    aperture = Aperture(window='hanning',
-                        origin=Position(),
-                        f_number=2.1,
-                        fixed_size=12e-3)
+    aperture = Aperture(
+        window="hanning", origin=Position(), f_number=2.1, fixed_size=12e-3
+    )
 
     wo = SphericalWaveOrigin()
     pos = Position(x=20e-3, y=0, z=50e-3)
@@ -38,10 +36,9 @@ def test_plane_wave():
     # Single divergin wave
 
     # Geometric origin
-    aperture = Aperture(window='hanning',
-                        origin=Position(),
-                        f_number=2.1,
-                        fixed_size=12e-3)
+    aperture = Aperture(
+        window="hanning", origin=Position(), f_number=2.1, fixed_size=12e-3
+    )
 
     wo = PlaneWaveOrigin()
     p = Position(x=20e-3, y=0, z=50e-3)
