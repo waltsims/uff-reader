@@ -12,7 +12,8 @@ class Rotation:
     """Contains a rotation in space in spherical coordinates and SI units.
     The rotation is specified using Euler angles that are applied in the order ZYX.
 
-    Attributes:
+    Attributes
+    ==========
     x: rotation around the X-axis in radians
     y: rotation around the Y-axis in radians
     z: rotation around the Z-axis in radians

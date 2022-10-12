@@ -6,7 +6,8 @@ from attrs import define
 class Position:
     """Contains a location in space in Cartesian coordinates and SI units.
 
-    Attributes:
+    Attributes
+    ==========
     x: x coordinate in meters
     y: y coordinate in meters
     z: z coordinate in meters

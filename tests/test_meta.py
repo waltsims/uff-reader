@@ -7,5 +7,3 @@ def test_version():
 
     if __version__ != "0.3.0":
         raise AssertionError(f"Version {__version__} string incorrect")
-
-    pass

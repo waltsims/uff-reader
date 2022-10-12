@@ -9,7 +9,8 @@ from uff.position import Position
 class Translation:
     """Define a translation operation in a 3D Cartesian system
 
-    Attributes:
+    Attributes
+    ==========
     x: x coordinate in meters
     y: coordinate in meters
     z: z coordinate in meters

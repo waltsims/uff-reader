@@ -3,10 +3,10 @@ import numpy as np
 from uff import (
     Aperture,
     Position,
-    PlaneWaveOrigin,
+    WaveOriginPlane,
+    WaveOriginSpherical,
     Wave,
     WaveType,
-    SphericalWaveOrigin,
     TransmitWave,
     TransmitSetup,
     ReceiveSetup,
@@ -24,8 +24,8 @@ def test_linear_scan_focused_beam():
 
     for wave_idx in range(N_waves):
         p = Position(x=x0[wave_idx], y=focal_depth)
-        a = Aperture(f_number=1, fixed_size=[40e-3, 12e-3], origin=Position())
-        waves.append(Wave(origin=p, aperture=a, wave_type=WaveType.CONVERGING))
+        a = Aperture(f_number=1, fixed_size=[40e-3, 12e-3], origin=Position(), window="Hamming")
+        waves.append(Wave(origin=p, aperture=a, wave_type=WaveType.converging))
 
 
 def test_plane_wave_sequence():
@@ -38,8 +38,8 @@ def test_plane_wave_sequence():
 
     for wave_idx in range(n_waves):
         a = Aperture(fixed_size=[40e-3, 12e-3], origin=Position(), window="hamming")
-        origin = PlaneWaveOrigin(rotation=Rotation(y=angles[wave_idx]))
-        waves.append(Wave(origin=origin, aperture=a, wave_type=WaveType.PLANE))
+        origin = WaveOriginPlane(rotation=Rotation(y=angles[wave_idx]))
+        waves.append(Wave(origin=origin, aperture=a, wave_type=WaveType.plane))
 
 
 def test_sector_scan_diverging_beams():
@@ -51,13 +51,13 @@ def test_sector_scan_diverging_beams():
 
     for angle in azimuth:
         w = Wave(
-            origin=SphericalWaveOrigin(
+            origin=WaveOriginSpherical(
                 position=Position(
                     x=virtual_source_distance * np.sin(angle),
                     z=-virtual_source_distance * np.cos(angle),
                 )
             ),
-            wave_type=WaveType.DIVERGING,
+            wave_type=WaveType.diverging,
             aperture=Aperture(
                 window="rectwin", origin=Position(), fixed_size=[18e-3, 12e-3]
             ),
@@ -75,12 +75,12 @@ def test_sector_scan_focus_beams():
 
     for angle in azimuth:
         w = Wave(
-            origin=SphericalWaveOrigin(
+            origin=WaveOriginSpherical(
                 position=Position(
                     x=focal_depth * np.sin(angle), z=focal_depth * np.cos(angle)
                 )
             ),
-            wave_type=WaveType.CONVERGING,
+            wave_type=WaveType.converging,
             aperture=Aperture(
                 window="rectwin", origin=Position(), fixed_size=[18e-3, 12e-3]
             ),
@@ -101,11 +101,11 @@ def test_scan_mlt():
         x_pos = focal_depth * np.cos(angle)
         y_pos = focal_depth * np.sin(angle)
         p: Position = Position(y=y_pos, x=x_pos)
-        origin = SphericalWaveOrigin(position=p)
+        origin = WaveOriginSpherical(position=p)
         a: Aperture = Aperture(
             fixed_size=[16e-3, 12e-3], origin=Position(), window="Tukey(0.5)"
         )
-        waves.append(Wave(origin=origin, aperture=a, wave_type=WaveType.CONVERGING))
+        waves.append(Wave(origin=origin, aperture=a, wave_type=WaveType.converging))
 
     events = []
     # Merge two beams into each event

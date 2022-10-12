@@ -10,7 +10,8 @@ class Excitation:
     """
     Describes the excitation applied to an element.
 
-    Attributes:
+    Attributes
+    ==========
     pulse_shape: String describing the pulse shape (e.g., sinusoidal, square wave, chirp),
         including necessary parameters
     waveform: Vector containing the sampled excitation waveform [normalized units]

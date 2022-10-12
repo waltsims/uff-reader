@@ -11,7 +11,8 @@ class Event:
     """
     UFF class to describe an unique ultrasound event, composed by a single transmit and receive setup
 
-    Attributes:
+    Attributes
+    ==========
     transmit_setup: Description of the transmit event (probe/channels, waves, excitations, etc.).
         If more than one probe is used in reception, this is a list of setups.
     receive_setup: Description of the transmit event (probe/channels, waves, excitations, etc.).

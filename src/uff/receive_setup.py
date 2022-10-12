@@ -10,7 +10,9 @@ class ReceiveSetup:
     Describes the setup used to receive and sample data. If more than one probe is used in reception, this is a list
     of setups.
 
-    Notes: The channel_mapping specifies the connection of system channels to transducer elements. The map is a
+    Notes
+    =====
+    The channel_mapping specifies the connection of system channels to transducer elements. The map is a
     M-by-N matrix (HDF5 dimension ordering), where N is the number of system channels and M is the maximum number of
     elements connected to a single channel. In most common cases, M=1. An unconnected state is marked by the value 0.
 

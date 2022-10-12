@@ -9,7 +9,8 @@ class TransmitWave:
     """
     UFF class to describe a transmitted wave as used in an event.
 
-    Attributes:
+    Attributes
+    ==========
     TODO: clarify weather type int or type wave is correct!
     wave: Index of the uff.wave within the list of unique_waves
         in the uff.channel_data structure

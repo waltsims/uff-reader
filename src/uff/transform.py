@@ -14,9 +14,10 @@ class Transform:
     coordinate system. The direction is given by local coordinate
     system of the object that owns this object.
 
-    Attributes:
-        translation (Translation): 	change in position in meters
-        rotation (Rotation): 	    change in rotation in radians
+    Attributes
+    ==========
+    translation: 	change in position in meters
+    rotation: 	    change in rotation in radians
     """
 
     _str_name: ClassVar = "transform"

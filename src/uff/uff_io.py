@@ -1,20 +1,14 @@
 from __future__ import annotations
 
-import abc
 import typing
-from typing import List, Type
+from typing import List, Type, get_args
 
 import numpy as np
 
 from uff.utils import PRIMITIVES, is_keys_str_decimals
 
 
-class Serializable(metaclass=abc.ABCMeta):
-    @staticmethod
-    @abc.abstractmethod
-    def str_name():
-        return
-
+class Serializable:
     def serialize(self):
         serialized = {}
         # TODO: fix import cycle
@@ -24,14 +18,14 @@ class Serializable(metaclass=abc.ABCMeta):
             if value is None:
                 continue
 
-            if isinstance(value, PRIMITIVES):
+            if isinstance(value, get_args(PRIMITIVES)):
                 serialized[k] = value
                 continue
             elif isinstance(value, list):
                 keys = [f"{i:08d}" for i in range(1, len(value) + 1)]
                 values = []
                 for val in value:
-                    if isinstance(val, PRIMITIVES):
+                    if isinstance(val, get_args(PRIMITIVES)):
                         values.append(val)
                     elif isinstance(val, Serializable):
                         values.append(val.serialize())
@@ -58,7 +52,7 @@ class Serializable(metaclass=abc.ABCMeta):
 
         for k, v in data.items():
             assert k in fields, f"Class {cls} does not have property named {k}."
-            if isinstance(v, PRIMITIVES):
+            if isinstance(v, get_args(PRIMITIVES)):
                 continue
             assert isinstance(v, dict), f"{type(v)} did not pass type-assertion"
 

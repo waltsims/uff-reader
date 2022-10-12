@@ -9,7 +9,8 @@ class TransmitSetup:
     """
     UFF class to describe the transmit event (probe/channels, waves, excitations, etc.).
 
-    Attributes:
+    Attributes
+    ==========
     probe: Index of the uff.probe used for transmit within the list of probes in
         the uff.channel_data structure
     transmit_waves: List of transmit waves used in this event with their respective

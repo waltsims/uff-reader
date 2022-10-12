@@ -9,7 +9,8 @@ from uff.position import Position
 class Perimeter:
     """Describes the geometry of an ultrasonic element.
 
-    Attributes:
+    Attributes
+    ==========
     position: List of positions
     """
 

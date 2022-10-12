@@ -15,8 +15,8 @@ class ChannelData:
     """
     UFF class that contains all the information needed to store and later process channel data.
 
-    Notes:
-
+    Notes
+    =====
     The parameter authors identifies the authors of the data; description describes the acquisition scheme,
     motivation and application; local_time and country_code identify the time and place the data were acquired;
     system describes the hardware used in the acquisition; sound_speed contains the reference speed of sound that was
@@ -44,7 +44,8 @@ class ChannelData:
     This proposal has the limitation of requiring that all event acquisitions have the same number of time samples
     and active channels
 
-    Attributes:
+    Attributes
+    ==========
     authors: (Optional) string with the authors of the data
     description: (Optional) string describing the data
     local_time: (Optional) string defining the time the dataset was acquired following ISO 8601

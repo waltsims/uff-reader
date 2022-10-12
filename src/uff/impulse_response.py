@@ -9,7 +9,8 @@ from numpy.typing import NDArray
 class ImpulseResponse:
     """Specifies a temporal impulse response
 
-    Attributes:
+    Attributes
+    ==========
     initial_time: Time in seconds from the delta excitation until the acquisition of the first sample
     sampling_frequency: Sampling frequency in Hz
     data: Collection of samples containing the impulse response

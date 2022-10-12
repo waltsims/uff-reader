@@ -23,7 +23,8 @@ class WaveOriginSpherical:
 class WaveOriginPlane:
     """UFF class to describe origin of a plane wave
 
-    Attributes:
+    Attributes
+    ==========
     rotation: Rotation of the wave relative to the direction [0 0 1]
     """
 
@@ -36,7 +37,8 @@ class WaveOriginPlane:
 class WaveOriginCylindrical:
     """UFF class to describe origin of a cylindrical wave, as those typically used in wor-column addressed arrays.
 
-    Attributes:
+    Attributes
+    ==========
     position: 2-element vector of uff.position defining the line that originates the wave
     """
 
@@ -49,7 +51,9 @@ class WaveOriginCylindrical:
 class WaveOriginPhotoacoustic:
     """UFF class to describe the origin of a photoacoustic wave.
 
-    Attributes: None
+    Attributes
+    ==========
+    None
     """
 
     _str_name: ClassVar = "wave_origin.photoacoustic"

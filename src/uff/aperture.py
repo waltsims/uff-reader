@@ -1,4 +1,4 @@
-from typing import ClassVar, Optional
+from typing import ClassVar, List, Optional
 
 from attrs import define
 
@@ -10,7 +10,8 @@ class Aperture:
     """
     UFF class to define analytically the aperture use in an ultrasound wave.
 
-    Notes:
+    Notes
+    =====
     The class aperture defines the transmit apodization profile. In this case
     origin defines the center of the aperture. The size of the aperture can
     be described with fixed_size, or with f_number in which case the aperture
@@ -18,7 +19,8 @@ class Aperture:
     uff.wave.aperture.origin. The parameter window is a string describing
     the apodization window.
 
-    Attributes:
+    Attributes
+    ==========
     origin: Location of the aperture center in space.
     window: String defining the apodization window type and parameter
         (e.g., 'Hamming', 'Gauss(8)', 'Tukey(0.5)')
@@ -40,9 +42,9 @@ class Aperture:
 
     # TODO: standard has this named aperture but defined as position
     origin: Position
-    window: str = "rectwin"
-    f_number: float = 1.0
     # TODO: what should fixed size type be? list? float? how do you reproduce the same functionality
-    fixed_size: float
+    fixed_size: List[float]
+    window: str = "Hamming"
+    f_number: float = 1.0
     minimum_size: Optional[float] = None
     maximum_size: Optional[float] = None

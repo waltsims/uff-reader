@@ -12,7 +12,7 @@ from uff import (
     Probe,
     WaveType,
     Aperture,
-    Origin,
+    WaveOrigin,
     Wave,
     TransmitWave,
     TimeZeroReferencePoint,

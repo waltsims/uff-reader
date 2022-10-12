@@ -15,8 +15,8 @@ class Probe:
     """
     Describes an generic ultrsound probe formed by a collection of elements.
 
-    Note:
-
+    Notes
+    =====
     Where focal_length specifies the lens focusing distance. Note that the
     elements in element_geometry and impulse_response are referred by the
     fields inside each member in element, avoiding unnecessary replication
