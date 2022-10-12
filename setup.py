@@ -19,6 +19,6 @@ setup(
         "requests>=2.26.0",
         "h5py>=3.5.0",
         "scipy>=1.7.0",
-        "pydantic>=1.10.0",
+        "attrs>=22.1.0",
     ],
 )
