@@ -1,44 +1,76 @@
-from dataclasses import dataclass
+from typing import ClassVar, Optional
+from enum import IntEnum
+
+from attrs import define
 
 from uff.aperture import Aperture
-from uff.origin import Origin
-from uff.uff_io import Serializable
-from uff.wave_type import WaveType
+from uff.wave_origin import WaveOrigin, WaveOriginPlane, WaveOriginPhotoacoustic, WaveOriginCylindrical, WaveOriginSpherical
 
 
-@dataclass
-class Wave(Serializable):
+class WaveType(IntEnum):
+    """wave_type
+    enumerated type (uint32) (
+        converging = 0,
+        diverging = 1,
+        plane = 2,
+        cylindrical = 3,
+        photoacoustic = 4,
+        default = 0
+    )
+    """
+
+    CONVERGING = 0
+    DIVERGING = 1
+    PLANE = 2
+    CYLINDRICAL = 3
+    PHOTOACOUSTIC = 4
+    DEFAULT = 0
+
+
+@define
+class Wave:
     """
     UFF class to describe the geometry of a transmitted wave or beam.
 
-    Attributes:
-        origin 	(WaveOrigin):       Geometric origin of the wave.
-        type (WaveType):         	enumerated type (int)
-                                    (converging = 0,
-                                    diverging = 1,
-                                    plane = 2,
-                                    cylindrical = 3,
-                                    photoacoustic = 4,
-                                    default = 0)
-        aperture (Aperture):     	Description of the aperture used to produce the wave
-        excitation 	(int): 	        (Optional) index to the unique excitation in the parent group
+    TODO: custom deserialization code to check WaveType, then load
+    the corresponding WaveOrigin
+
+    Attributes
+    ==========
+    origin: Geometric origin of the wave.
+    type: enumerated type (int)
+        (converging = 0,
+        diverging = 1,
+        plane = 2,
+        cylindrical = 3,
+        photoacoustic = 4,
+        default = 0)
+    aperture: Description of the aperture used to produce the wave
+    excitation: (Optional) index to the unique excitation in the parent group
     """
 
-    @staticmethod
-    def str_name():
-        return 'unique_waves'
+    _str_name: ClassVar = "unique_waves"
 
-    @classmethod
-    def deserialize(cls: object, data: dict):
-        data['wave_type'] = data.pop('type')
-        return super().deserialize(data)
-
-    def serialize(self):
-        data = super().serialize()
-        data['type'] = data.pop('wave_type')
-        return data
-
-    origin: Origin
+    origin: WaveOrigin
     wave_type: WaveType
     aperture: Aperture
-    excitation: int = None
+    excitation: Optional[int] = None
+
+    def __init__(self, origin, wave_type, aperture, excitation = None):
+        match (wave_type):
+            case WaveType.PLANE:
+                origin = WaveOriginPlane(**origin)
+            case WaveType.CYLINDRICAL:
+                origin = WaveOriginCylindrical(**origin)
+            case WaveType.CONVERGING:
+                origin = WaveOriginSpherical(**origin)
+            case WaveType.DIVERGING:
+                origin = WaveOriginSpherical(**origin)
+            case WaveType.PHOTOACOUSTIC:
+                origin = WaveOriginPhotoacoustic()
+
+        self.origin = origin
+        self.wave_type = wave_type
+        self.aperture = Aperture(**aperture)
+        self.excitation = excitation
+

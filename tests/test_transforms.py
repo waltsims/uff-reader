@@ -14,7 +14,7 @@ def test_translate_position():
 
 
 def test_rotation_position():
-    rot1 = R.from_euler('xyz', [50, 60, 90], degrees=False)
+    rot1 = R.from_euler("xyz", [50, 60, 90], degrees=False)
     point = Position(x=1, y=2, z=3)
     point1 = Position(*rot1.apply(np.array(point)))
     rot2 = Rotation(50, 60, 90)

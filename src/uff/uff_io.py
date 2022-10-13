@@ -1,20 +1,14 @@
 from __future__ import annotations
 
-import abc
 import typing
-from typing import List, Type
+from typing import List, Type, get_args
 
 import numpy as np
 
 from uff.utils import PRIMITIVES, is_keys_str_decimals
 
 
-class Serializable(metaclass=abc.ABCMeta):
-    @staticmethod
-    @abc.abstractmethod
-    def str_name():
-        return
-
+class Serializable:
     def serialize(self):
         serialized = {}
         # TODO: fix import cycle
@@ -24,30 +18,32 @@ class Serializable(metaclass=abc.ABCMeta):
             if value is None:
                 continue
 
-            if isinstance(value, PRIMITIVES):
+            if isinstance(value, get_args(PRIMITIVES)):
                 serialized[k] = value
                 continue
             elif isinstance(value, list):
-                keys = [f'{i:08d}' for i in range(1, len(value) + 1)]
+                keys = [f"{i:08d}" for i in range(1, len(value) + 1)]
                 values = []
                 for val in value:
-                    if isinstance(val, PRIMITIVES):
+                    if isinstance(val, get_args(PRIMITIVES)):
                         values.append(val)
                     elif isinstance(val, Serializable):
                         values.append(val.serialize())
                     elif isinstance(val, list):
-                        keys2 = [f'{i:08d}' for i in range(1, len(val) + 1)]
+                        keys2 = [f"{i:08d}" for i in range(1, len(val) + 1)]
                         values.append(dict(zip(keys2, val)))
                     else:
                         raise NotImplementedError
 
                 serialized[k] = dict(zip(keys, values))
-            elif isinstance( value, Serializable):  # cls in Serializable.__subclasses__():
+            elif isinstance(
+                value, Serializable
+            ):  # cls in Serializable.__subclasses__():
                 serialized[k] = value.serialize()
             elif isinstance(value, WaveType):
                 serialized[k] = value.value
             else:
-                raise TypeError(f'Unknown type [{type(value)}] for serialization!')
+                raise TypeError(f"Unknown type [{type(value)}] for serialization!")
         return serialized
 
     @classmethod
@@ -55,16 +51,16 @@ class Serializable(metaclass=abc.ABCMeta):
         fields = cls.__annotations__
 
         for k, v in data.items():
-            assert k in fields, f'Class {cls} does not have property named {k}.'
-            if isinstance(v, PRIMITIVES):
+            assert k in fields, f"Class {cls} does not have property named {k}."
+            if isinstance(v, get_args(PRIMITIVES)):
                 continue
-            assert isinstance(v, dict), f'{type(v)} did not pass type-assertion'
+            assert isinstance(v, dict), f"{type(v)} did not pass type-assertion"
 
             # property_cls = Serializable.get_subcls_with_name(k)
             property_cls = fields[k]
             if isinstance(property_cls, typing._GenericAlias):  # TODO explain this
                 property_cls = property_cls.__args__[0]
-            assert property_cls is not None, f'Class {k} is not Serializable!'
+            assert property_cls is not None, f"Class {k} is not Serializable!"
 
             if not is_keys_str_decimals(v):
                 data[k] = property_cls.deserialize(v)
@@ -80,10 +76,9 @@ class Serializable(metaclass=abc.ABCMeta):
     def all_subclasses(cls=None) -> List[Type[Serializable]]:
         if cls is None:
             cls = Serializable
-        subclasses = set(cls.__subclasses__()).union([
-            s for c in cls.__subclasses__()
-            for s in Serializable.all_subclasses(c)
-        ])
+        subclasses = set(cls.__subclasses__()).union(
+            [s for c in cls.__subclasses__() for s in Serializable.all_subclasses(c)]
+        )
         return list(subclasses)
 
     @staticmethod
@@ -132,14 +127,15 @@ class Serializable(metaclass=abc.ABCMeta):
                         equal = False
                 except ValueError as err:
                     print(
-                        'Ooops! Something went wrong! Probably unsupported comparision. '
-                        'Try to override the __eq__ method & handle custom data structures properly. '
-                        'Error message is given below:')
+                        "Ooops! Something went wrong! Probably unsupported comparision. "
+                        "Try to override the __eq__ method & handle custom data structures properly. "
+                        "Error message is given below:"
+                    )
                     raise err
 
         if not equal:
-            print('Non-matching attributes detected!')
-            print(f'Class name: {self.__class__}')
-            print(f'Attrb name: {last_attr}')
+            print("Non-matching attributes detected!")
+            print(f"Class name: {self.__class__}")
+            print(f"Attrb name: {last_attr}")
 
         return equal
