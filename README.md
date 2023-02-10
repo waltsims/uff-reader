@@ -1,4 +1,4 @@
-# uff.py
+# uff-reader 
 
 Python Reader for the Ultrasound File Format
 
@@ -9,7 +9,7 @@ the [Ultrasound File Format](https://bitbucket.org/ultrasound_file_format/uff/wi
 
 to install run:
 
-```pip install git+https://github.com/waltsims/uff.py```
+```pip install uff-reader```
 
 ## Getting Started
 

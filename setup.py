@@ -1,8 +1,4 @@
-#!/usr/bin/env python
-
-from distutils.core import setup
-
-# from uff.version import __version__
+from setuptools import setup
 
 setup(
     name='uff-reader',
@@ -10,7 +6,6 @@ setup(
     description='Python interface for the Ultrasound File Format (UFF)',
     author='Walter Simson',
     author_email='walter.simson@tum.de',
-    # url='',
     packages=['uff'],
     package_dir={'': 'src'},
     install_requires=['numpy>=1.20',
