@@ -2,12 +2,12 @@ from setuptools import setup
 
 setup(
     name='uff-reader',
-    version='0.0.1',
+    version='0.0.2',
     description='Python interface for the Ultrasound File Format (UFF)',
     author='Walter Simson',
     author_email='walter.simson@tum.de',
     packages=['uff'],
-    package_dir={'': 'src'},
+    package_dir={'': 'uff'},
     install_requires=['numpy>=1.20',
                       'pytest>=6.2.4',
                       'requests>=2.26.0',

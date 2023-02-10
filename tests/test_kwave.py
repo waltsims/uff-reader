@@ -5,7 +5,7 @@ import numpy as np
 from uff import ElementGeometry, Perimeter, Position, Translation, Rotation, Transform, Probe, WaveType, Aperture, \
     Origin, Wave, TransmitWave, TimeZeroReferencePoint, TransmitSetup, ReceiveSetup, ChannelData, UFF, Excitation, \
     Element, TimedEvent, Event
-from uff.utils import verify_correctness, load_uff_dict, is_version_compatible
+from uff import verify_correctness, load_uff_dict, is_version_compatible
 
 
 def create_uff(data_type='real'):

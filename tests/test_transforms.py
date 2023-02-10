@@ -1,7 +1,7 @@
-from uff.translation import Translation
-from uff.rotation import Rotation
-from uff.transform import Transform
-from uff.position import Position
+from uff import Translation
+from uff import Rotation
+from uff import Transform
+from uff import Position
 import numpy as np
 from scipy.spatial.transform.rotation import Rotation as R
 

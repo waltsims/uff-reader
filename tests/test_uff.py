@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 
 from uff.uff import UFF
-from uff.utils import verify_correctness, is_version_compatible, load_uff_dict, download_test_data
+from uff import verify_correctness, is_version_compatible, load_uff_dict, download_test_data
 
 FIXTURE_DIR = os.path.join(
     os.path.dirname(os.path.realpath(__file__)),

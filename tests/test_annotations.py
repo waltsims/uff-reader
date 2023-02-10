@@ -1,5 +1,5 @@
 from __future__ import annotations
-from uff.time_zero_reference_point import TimeZeroReferencePoint
+from uff import TimeZeroReferencePoint
 
 
 def test_annotations():

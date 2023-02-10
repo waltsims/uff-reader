@@ -1,12 +1,12 @@
-from uff.element import Element
-from uff.element_geometry import ElementGeometry
-from uff.impulse_response import ImpulseResponse
-from uff.perimeter import Perimeter
-from uff.position import Position
-from uff.probe import Probe
-from uff.rotation import Rotation
-from uff.transform import Transform
-from uff.translation import Translation
+from uff import Element
+from uff import ElementGeometry
+from uff import ImpulseResponse
+from uff import Perimeter
+from uff import Position
+from uff import Probe
+from uff import Rotation
+from uff import Transform
+from uff import Translation
 
 
 def test_instantiation():

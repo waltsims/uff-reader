@@ -7,7 +7,7 @@ name = "uff-reader"
 description = "Python interface for the Ultrasound File Format (UFF)"
 readme = "README.md"
 license = "MIT"
-version = "0.0.1"
+version = "0.0.2"
 authors = [
     { name = "Walter Simson", email = "walter.simson@tum.de" },
 ]
@@ -21,5 +21,5 @@ dependencies = [
 
 [tool.hatch.build.targets.sdist]
 include = [
-    "/src",
+    "uff",
 ]

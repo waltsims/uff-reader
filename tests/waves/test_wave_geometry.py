@@ -1,7 +1,7 @@
 from uff import Aperture, Position, WaveType
-from uff.plane_wave_origin import PlaneWaveOrigin
-from uff.spherical_wave_origin import SphericalWaveOrigin
-from uff.wave import Wave
+from uff import PlaneWaveOrigin
+from uff import SphericalWaveOrigin
+from uff import Wave
 
 
 def test_converging_wave():

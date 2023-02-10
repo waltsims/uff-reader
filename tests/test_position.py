@@ -1,4 +1,4 @@
-from uff.position import Position
+from uff import Position
 import unittest
 
 

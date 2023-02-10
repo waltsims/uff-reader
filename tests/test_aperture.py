@@ -1,5 +1,5 @@
-from uff.aperture import Aperture
-from uff.position import Position
+from uff import Aperture
+from uff import Position
 
 
 def test_instantiation():
