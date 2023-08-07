@@ -2,8 +2,10 @@
 
 Python Reader for the Ultrasound File Format
 
-This python package is based on the standard defined in v0.3.0 of
+This Python package is based on the standard defined in v0.3.0 of
 the [Ultrasound File Format](https://bitbucket.org/ultrasound_file_format/uff/wiki/Home).
+
+**NOTE**: A Python reader for the Ultrasound toolbox ([USTB](https://bitbucket.org/ustb/ustb)) version of uff can be found [here](https://github.com/magnusdk/pyuff_ustb)
 
 ## Instalation
 
